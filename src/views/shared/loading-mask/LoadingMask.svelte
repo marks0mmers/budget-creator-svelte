@@ -1,0 +1,24 @@
+<script lang="ts">
+    import Spinner from "./Spinner.svelte";
+
+    export let message = "";
+</script>
+
+<div class="spinner-wrapper">
+    <Spinner {message}/>
+</div>
+
+<style lang="scss">
+  .spinner-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 998;
+  }
+</style>
