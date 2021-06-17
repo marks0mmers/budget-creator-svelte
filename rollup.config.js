@@ -10,6 +10,17 @@ import css from 'rollup-plugin-css-only';
 
 const production = !process.env.ROLLUP_WATCH;
 
+function typeCheck() {
+	return {
+		writeBundle() {
+			require('child_process').spawn('svelte-check', {
+				stdio: ['ignore', 'inherit', 'inherit'],
+				shell: true
+			});
+		}
+	}
+}
+
 function serve() {
 	let server;
 
@@ -61,6 +72,7 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
+		typeCheck(),
 		typescript({
 			sourceMap: !production,
 			inlineSources: !production

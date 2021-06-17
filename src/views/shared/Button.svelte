@@ -21,7 +21,7 @@
         }
     }
 
-    export let id = "";
+    export let id: string;
     export let text = "";
     export let tooltip = "";
     export let type: "button" | "submit" | "reset" = "button";

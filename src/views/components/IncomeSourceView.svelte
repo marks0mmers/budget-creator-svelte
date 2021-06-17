@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {IncomeSource} from "../../models/income-source";
+    import type {IncomeSource} from "../../models/income-source";
     import IncomeSourceForm from "./forms/IncomeSourceForm.svelte";
     import CircleButton from "../shared/CircleButton.svelte";
     import {incomeSourceStore} from "../../store/income-source.store";

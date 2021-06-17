@@ -1,4 +1,3 @@
-// @ts-ignore
 import { toast } from "@zerodevx/svelte-toast"
 
 export const fail = (message: string) => {

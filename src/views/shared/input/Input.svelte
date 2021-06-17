@@ -1,7 +1,7 @@
 <script lang="ts">
     import {onMount} from "svelte";
 
-    export let id = "";
+    export let id: string;
     export let type = "text";
     export let required = false;
     export let value = "";

@@ -2,7 +2,7 @@
     export let iconName: string;
     export let size = 20;
     export let margin = 0;
-    export let color = "black"
+    export let color = "black";
 
     $: styles = {
         margin: margin ? `${margin}px` : 'auto',
@@ -11,7 +11,7 @@
     }
 
     $: cssVarStyles = Object.keys(styles)
-        .map(key => `--${key}:${styles[key]}`)
+        .map((key: keyof typeof styles) => `--${key}:${styles[key]}`)
         .join(';');
 </script>
 

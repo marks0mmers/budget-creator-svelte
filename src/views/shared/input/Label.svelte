@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let forValue = "";
+    export let forValue: string;
 </script>
 
 <label class="label" for={forValue}>
