@@ -4,14 +4,16 @@
     export let margin = 0;
     export let color = "black";
 
+    let styles: { [key: string]: string };
     $: styles = {
         margin: margin ? `${margin}px` : "auto",
         fontSize: `${size}px`,
         color: color,
     };
 
+    let cssVarStyles: string;
     $: cssVarStyles = Object.keys(styles)
-        .map((key: keyof typeof styles) => `--${key}:${styles[key]}`)
+        .map((key) => `--${key}:${styles[key]}`)
         .join(";");
 </script>
 

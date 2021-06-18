@@ -1289,6 +1289,14 @@ svelte2tsx@^0.1.151:
     dedent-js "^1.0.1"
     pascal-case "^3.1.1"
 
+svelte2tsx@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/svelte2tsx/-/svelte2tsx-0.2.1.tgz#4153d0d9d9603fb3ac043b556f0978dd5b8bf88f"
+  integrity sha512-3JNUm+rRz0BYwO53NDEqpswW3wU2uvKtpIBjrFbizso8HJpjHM1NCFyXvVfdeM9vG7xH6oh3n0G0tE9noAomKA==
+  dependencies:
+    dedent-js "^1.0.1"
+    pascal-case "^3.1.1"
+
 svelte@^3.38.2:
   version "3.38.2"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.38.2.tgz#55e5c681f793ae349b5cc2fe58e5782af4275ef5"

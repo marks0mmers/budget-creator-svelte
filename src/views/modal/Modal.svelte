@@ -10,17 +10,17 @@
 
     function open() {
         ref.style.display = "block";
-        modalBox.classList.add("modal-open");
+        modalBox?.classList.add("modal-open");
     }
 
     function close() {
         ref.style.display = "none";
-        modalBox.classList.remove("modal-open");
+        modalBox?.classList.remove("modal-open");
     }
 
     onMount(() => {
         if (ref) {
-            modalBox.appendChild(ref);
+            modalBox?.appendChild(ref);
             ref.addEventListener("click", (el: any) => {
                 if (el.target.className === "modal") {
                     close();

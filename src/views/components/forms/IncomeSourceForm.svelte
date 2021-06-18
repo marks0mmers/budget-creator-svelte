@@ -15,7 +15,8 @@
 
     export let budgetId: number;
     export let incomeSourceId = 0;
-    export let initialValues: UpsertIncomeSourceContract = undefined;
+    export let initialValues: UpsertIncomeSourceContract | undefined =
+        undefined;
 
     const dispatch = createEventDispatcher();
 

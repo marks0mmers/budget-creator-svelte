@@ -19,7 +19,9 @@
     }
 
     async function deleteBudget() {
-        await budgetStore.deleteBudget($selectedBudgetId);
+        if ($selectedBudgetId) {
+            await budgetStore.deleteBudget($selectedBudgetId);
+        }
     }
 
     onMount(async () => {

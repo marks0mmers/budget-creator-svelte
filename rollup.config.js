@@ -41,7 +41,7 @@ export default {
         file: "public/build/bundle.js",
     },
     plugins: [
-        // typeCheck(),
+        typeCheck(),
         svelte({
             preprocess: sveltePreprocess({ sourceMap: !production }),
             compilerOptions: {

@@ -11,6 +11,7 @@
     import { userStore } from "../../store/user.store";
     import { buildErrors } from "../../util/form-utils";
     import Error from "../shared/input/Error.svelte";
+    import Password from "../shared/input/Password.svelte";
 
     const navigate = useNavigate();
 
@@ -67,11 +68,7 @@
             <Label forValue="password">
                 Password
                 <Required />
-                <Input
-                    id="password"
-                    type="password"
-                    bind:value="{$loginForm.password}"
-                />
+                <Password id="password" bind:value="{$loginForm.password}" />
                 <Error
                     >{errors.has("password")
                         ? errors.get("password")

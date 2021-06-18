@@ -38,7 +38,7 @@
     export let colorType: "primary" | "secondary" | "tertiary" | "transparent" =
         "primary";
 
-    let styles: {};
+    let styles: { [key: string]: string };
     $: styles = {
         background: ColorTypes[colorType].background,
         color: ColorTypes[colorType].fontColor,

@@ -13,20 +13,24 @@
     let incomeFormShowing = false;
 
     let mouseInExpenseLabel = false;
-    let expenseFormShowing = false;
+    // let expenseFormShowing = false;
 
+    let incomeSourceValues: IncomeSource[];
     $: incomeSourceValues = [...incomeSources.values()].sort((a, b) =>
         a.name.localeCompare(b.name)
     );
 
+    let expenseSourceValues: ExpenseSource[];
     $: expenseSourceValues = [...expenseSources.values()].sort((a, b) =>
         a.name.localeCompare(b.name)
     );
 
+    let incomeTotals: string;
     $: incomeTotals = incomeSourceValues
         .reduce((total, i) => total + i.amount, 0)
         .toFixed(2);
 
+    let expenseTotals: string;
     $: expenseTotals = expenseSourceValues
         .reduce((total, i) => total + i.amount, 0)
         .toFixed(2);

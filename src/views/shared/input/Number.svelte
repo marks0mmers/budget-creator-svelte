@@ -15,6 +15,7 @@
     export let paddingLeft = 0;
     export let paddingBottom = 0;
 
+    let styles: { [key: string]: string };
     $: styles = {
         width: width ? `${width}px` : "100%",
         height: `${height}px`,
@@ -31,6 +32,7 @@
         paddingBottom: `${paddingBottom}px`,
     };
 
+    let cssVarStyles: string;
     $: cssVarStyles = Object.keys(styles)
         .map((key) => `--${key}:${styles[key]}`)
         .join(";");
@@ -40,6 +42,7 @@
     id="{id}"
     required="{required}"
     type="number"
+    step="0.01"
     bind:value
     style="{cssVarStyles}"
 />

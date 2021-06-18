@@ -38,7 +38,13 @@
         .join(";");
 </script>
 
-<input id="{id}" required="{required}" bind:value style="{cssVarStyles}" />
+<input
+    id="{id}"
+    type="password"
+    required="{required}"
+    bind:value
+    style="{cssVarStyles}"
+/>
 
 <style lang="scss">
     input {

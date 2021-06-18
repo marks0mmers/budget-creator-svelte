@@ -4,8 +4,9 @@
 
     export let expenseCategories = new Map<string, ExpenseCategory>();
 
-    let isAdding = false;
+    // let isAdding = false;
 
+    let expenseCategoryValues: ExpenseCategory[];
     $: expenseCategoryValues = [...expenseCategories.values()].sort((a, b) =>
         a.name.localeCompare(b.name)
     );
