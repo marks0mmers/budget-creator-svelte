@@ -9,6 +9,7 @@
     import Label from "../../shared/input/Label.svelte";
     import Required from "../../shared/input/Required.svelte";
     import Input from "../../shared/input/Input.svelte";
+    import Number from "../../shared/input/Number.svelte";
     import Button from "../../shared/Button.svelte";
     import { incomeSourceStore } from "../../../store/income-source.store";
 
@@ -91,11 +92,7 @@
     <Label forValue="amount">
         Amount
         <Required />
-        <Input
-            id="amount"
-            type="number"
-            bind:value="{$incomeSourceForm.amount}"
-        />
+        <Number id="amount" bind:value="{$incomeSourceForm.amount}" />
     </Label>
     <Button
         id="income-source-form-submit"

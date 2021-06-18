@@ -1,25 +1,38 @@
 <script lang="ts">
     import type { IncomeSource } from "../../models/income-source";
+    import type { ExpenseSource } from "../../models/expense-source";
     import CircleButton from "../shared/CircleButton.svelte";
     import IncomeSourceView from "./IncomeSourceView.svelte";
     import IncomeSourceForm from "./forms/IncomeSourceForm.svelte";
 
     export let budgetId = 0;
     export let incomeSources = new Map<number, IncomeSource>();
+    export let expenseSources = new Map<number, ExpenseSource>();
 
     let mouseInIncomeLabel = false;
-    let formShowing = false;
+    let incomeFormShowing = false;
+
+    let mouseInExpenseLabel = false;
+    let expenseFormShowing = false;
 
     $: incomeSourceValues = [...incomeSources.values()].sort((a, b) =>
         a.name.localeCompare(b.name)
     );
 
-    $: totals = incomeSourceValues
+    $: expenseSourceValues = [...expenseSources.values()].sort((a, b) =>
+        a.name.localeCompare(b.name)
+    );
+
+    $: incomeTotals = incomeSourceValues
+        .reduce((total, i) => total + i.amount, 0)
+        .toFixed(2);
+
+    $: expenseTotals = expenseSourceValues
         .reduce((total, i) => total + i.amount, 0)
         .toFixed(2);
 </script>
 
-<section class="income-sources">
+<section class="sources">
     <h3
         class="income-sources-label"
         on:mouseenter="{() => (mouseInIncomeLabel = true)}"
@@ -30,7 +43,7 @@
             id="add-income-source"
             icon="add"
             visible="{mouseInIncomeLabel}"
-            on:click="{() => (formShowing = true)}"
+            on:click="{() => (incomeFormShowing = true)}"
         />
     </h3>
     <div id="income-sources-container">
@@ -41,27 +54,45 @@
                 incomeSource="{incomeSource}"
             />
         {/each}
-        {#if formShowing}
+        {#if incomeFormShowing}
             <IncomeSourceForm
                 budgetId="{budgetId}"
-                on:hideForm="{() => (formShowing = false)}"
+                on:hideForm="{() => (incomeFormShowing = false)}"
             />
         {/if}
     </div>
-    <footer class="total">
+    <footer class="income-total">
         <span>Total</span>
-        <span>{totals}</span>
+        <span id="total">${incomeTotals}</span>
+    </footer>
+
+    <h3
+        class="expense-sources-label"
+        on:mouseenter="{() => (mouseInExpenseLabel = true)}"
+        on:mouseleave="{() => (mouseInExpenseLabel = false)}"
+    >
+        Expense Sources
+        <CircleButton
+            id="add-expense-source"
+            icon="add"
+            visible="{mouseInExpenseLabel}"
+        />
+    </h3>
+    <div id="expense-sources-container"></div>
+    <footer class="expense-total">
+        <span>Total</span>
+        <span id="total">${expenseTotals}</span>
     </footer>
 </section>
 
 <style lang="scss">
-    .income-sources {
+    .sources {
         background: white;
         grid-area: income-sources;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
             0 6px 20px 0 rgba(0, 0, 0, 0.19);
         display: grid;
-        grid-template-rows: auto 1fr auto;
+        grid-template-rows: auto 1fr auto auto 3fr auto;
 
         .income-sources-label {
             padding: 10px;
@@ -71,12 +102,36 @@
             border-bottom: 1px solid lightgray;
         }
 
-        .total {
+        .expense-sources-label {
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            font-weight: normal;
+            border-bottom: 1px solid lightgray;
+            border-top: 1px solid lightgray;
+        }
+
+        .income-total,
+        .expense-total {
             padding: 10px;
             display: grid;
             grid-template-columns: 1fr auto 40px;
             grid-column-gap: 5px;
             border-top: 1px solid lightgray;
+        }
+
+        .income-total {
+            #total {
+                font-weight: bold;
+                color: rgb(32, 196, 32);
+            }
+        }
+
+        .expense-total {
+            #total {
+                font-weight: bold;
+                color: rgb(196, 32, 32);
+            }
         }
     }
 </style>

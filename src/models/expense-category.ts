@@ -6,7 +6,6 @@ import {
 export interface ExpenseCategoryContract {
     id: number;
     name: string;
-    description: string;
     subCategories: ExpenseSubCategoryContract[];
 }
 
@@ -23,18 +22,15 @@ export interface ExpenseCategoryRecord
 export class ExpenseCategory implements ExpenseCategoryRecord {
     id: number;
     name: string;
-    description: string;
     subCategories: Map<number, ExpenseSubCategory>;
 
     private constructor(
         id: number,
         name: string,
-        description: string,
         subCategories: Map<number, ExpenseSubCategory>
     ) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.subCategories = subCategories;
     }
 
@@ -42,7 +38,6 @@ export class ExpenseCategory implements ExpenseCategoryRecord {
         new ExpenseCategory(
             e.id,
             e.name,
-            e.description,
             e.subCategories.reduce(
                 (map, e) => map.set(e.id, ExpenseSubCategory.fromContract(e)),
                 new Map<number, ExpenseSubCategory>()

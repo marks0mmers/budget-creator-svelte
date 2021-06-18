@@ -15,6 +15,10 @@
             background: "rgb(185, 23, 23)",
             fontColor: "white",
         },
+        tertiary: {
+            background: "lightgrey",
+            fontColor: "black",
+        },
         transparent: {
             background: "transparent",
             fontColor: "lightgrey",
@@ -31,7 +35,8 @@
     export let marginTopBottom = 0;
     export let marginLeftRight = 0;
     export let gridArea = "";
-    export let colorType: "primary" | "secondary" | "transparent" = "primary";
+    export let colorType: "primary" | "secondary" | "tertiary" | "transparent" =
+        "primary";
 
     let styles: {};
     $: styles = {

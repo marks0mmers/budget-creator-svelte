@@ -1,9 +1,14 @@
 <script lang="ts">
     export let forValue: string;
+    export let gridArea = "";
     export let marginBottom = "0px";
 </script>
 
-<label class="label" for="{forValue}" style="margin-bottom: {marginBottom}">
+<label
+    class="label"
+    for="{forValue}"
+    style="margin-bottom: {marginBottom}; grid-area: {gridArea}"
+>
     <slot />
 </label>
 

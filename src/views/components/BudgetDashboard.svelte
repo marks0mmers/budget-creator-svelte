@@ -1,5 +1,6 @@
 <script lang="ts">
     import { budgetStore } from "../../store/budget.store";
+    import Categories from "./categories/Categories.svelte";
     import SourcesList from "./SourcesList.svelte";
 
     const { selectedBudget } = budgetStore;
@@ -11,6 +12,7 @@
             budgetId="{$selectedBudget.id}"
             incomeSources="{$selectedBudget.incomeSources}"
         />
+        <Categories />
     {/if}
 </main>
 
@@ -20,8 +22,12 @@
         background: rgb(250, 250, 250);
         padding: 20px;
         display: grid;
-        grid-template-rows: 1fr;
+        row-gap: 10px;
+        column-gap: 10px;
+        grid-template-rows: auto 1fr;
         grid-template-columns: 1fr 3fr;
-        grid-template-areas: "income-sources . ";
+        grid-template-areas:
+            "income-sources categories "
+            "income-sources .";
     }
 </style>

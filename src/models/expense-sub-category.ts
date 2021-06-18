@@ -1,7 +1,6 @@
 export interface ExpenseSubCategoryContract {
     id: number;
     name: string;
-    description: string;
 }
 
 export type UpsertExpenseSubCategoryContract = Omit<
@@ -12,14 +11,12 @@ export type UpsertExpenseSubCategoryContract = Omit<
 export class ExpenseSubCategory implements ExpenseSubCategoryContract {
     id: number;
     name: string;
-    description: string;
 
-    private constructor(id: number, name: string, description: string) {
+    private constructor(id: number, name: string) {
         this.id = id;
         this.name = name;
-        this.description = description;
     }
 
     public static readonly fromContract = (c: ExpenseSubCategoryContract) =>
-        new ExpenseSubCategory(c.id, c.name, c.description);
+        new ExpenseSubCategory(c.id, c.name);
 }

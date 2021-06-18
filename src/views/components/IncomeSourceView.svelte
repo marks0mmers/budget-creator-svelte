@@ -25,7 +25,7 @@
         on:mouseleave="{() => (isMouseInIncomeSource = false)}"
     >
         <span>{incomeSource.name}</span>
-        <span>{incomeSource.amount.toFixed(2)}</span>
+        <span class="green">${incomeSource.amount.toFixed(2)}</span>
         <CircleButton
             id="edit-income-source"
             icon="edit"
@@ -57,6 +57,11 @@
         display: grid;
         grid-template-columns: 1fr auto 20px 20px;
         grid-column-gap: 4px;
+
+        .green {
+            font-weight: bold;
+            color: rgb(32, 196, 32);
+        }
 
         &:hover {
             background: rgb(240, 240, 240) !important;

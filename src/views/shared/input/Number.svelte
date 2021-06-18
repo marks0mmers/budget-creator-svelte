@@ -1,9 +1,7 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-
     export let id: string;
     export let required = false;
-    export let value = "";
+    export let value = 0;
     export let width = 0;
     export let height = 20;
     export let isInvalid = false;
@@ -38,7 +36,13 @@
         .join(";");
 </script>
 
-<input id="{id}" required="{required}" bind:value style="{cssVarStyles}" />
+<input
+    id="{id}"
+    required="{required}"
+    type="number"
+    bind:value
+    style="{cssVarStyles}"
+/>
 
 <style lang="scss">
     input {
