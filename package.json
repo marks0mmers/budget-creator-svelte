@@ -1,37 +1,39 @@
 {
-  "name": "budget-creator",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public --no-clear",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^19.0.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@rollup/plugin-typescript": "^8.2.1",
-    "@tsconfig/svelte": "^2.0.1",
-    "@types/yup": "^0.29.11",
-    "@zerodevx/svelte-toast": "^0.3.0",
-    "rollup": "^2.52.1",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-dev": "^1.1.3",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-svelte": "^7.1.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "sass": "^1.35.1",
-    "svelte": "^3.38.2",
-    "svelte-check": "^2.1.0",
-    "svelte-navigator": "^3.1.5",
-    "svelte-portal": "^2.1.2",
-    "svelte-preprocess": "^4.7.3",
-    "tslib": "^2.3.0",
-    "typescript": "^4.3.4",
-    "yup": "^0.32.9"
-  },
-  "dependencies": {
-    "sirv-cli": "^1.0.12"
-  }
+    "name": "budget-creator",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "rollup -c",
+        "dev": "rollup -c -w",
+        "start": "sirv public --no-clear",
+        "check": "svelte-check --tsconfig ./tsconfig.json"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^19.0.0",
+        "@rollup/plugin-node-resolve": "^13.0.0",
+        "@rollup/plugin-typescript": "^8.2.1",
+        "@tsconfig/svelte": "^2.0.1",
+        "@types/yup": "^0.29.11",
+        "@zerodevx/svelte-toast": "^0.3.0",
+        "prettier": "^2.3.1",
+        "prettier-plugin-svelte": "^2.3.0",
+        "rollup": "^2.52.1",
+        "rollup-plugin-css-only": "^3.1.0",
+        "rollup-plugin-dev": "^1.1.3",
+        "rollup-plugin-livereload": "^2.0.0",
+        "rollup-plugin-svelte": "^7.1.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "sass": "^1.35.1",
+        "svelte": "^3.38.2",
+        "svelte-check": "^2.1.0",
+        "svelte-navigator": "^3.1.5",
+        "svelte-portal": "^2.1.2",
+        "svelte-preprocess": "^4.7.3",
+        "tslib": "^2.3.0",
+        "typescript": "^4.3.4",
+        "yup": "^0.32.9"
+    },
+    "dependencies": {
+        "sirv-cli": "^1.0.12"
+    }
 }

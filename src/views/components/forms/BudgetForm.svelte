@@ -2,14 +2,14 @@
     import Label from "../../shared/input/Label.svelte";
     import Required from "../../shared/input/Required.svelte";
     import Input from "../../shared/input/Input.svelte";
-    import {writable} from "svelte/store";
-    import type {CreateBudgetContract} from "../../../models/budget";
-    import {object, string} from "yup";
-    import {buildErrors} from "../../../util/form-utils";
+    import { writable } from "svelte/store";
+    import type { CreateBudgetContract } from "../../../models/budget";
+    import { object, string } from "yup";
+    import { buildErrors } from "../../../util/form-utils";
     import Error from "../../shared/input/Error.svelte";
     import Button from "../../shared/Button.svelte";
-    import {createEventDispatcher} from "svelte";
-    import {budgetStore} from "../../../store/budget.store";
+    import { createEventDispatcher } from "svelte";
+    import { budgetStore } from "../../../store/budget.store";
 
     const dispatch = createEventDispatcher();
 
@@ -23,17 +23,18 @@
     budgetForm.subscribe(() => {
         submitted = false;
         errors = new Map<string, string>();
-    })
+    });
 
     const budgetSchema = object().shape({
-        title: string()
-            .required("Title is required")
+        title: string().required("Title is required"),
     });
 
     $: if (submitted) {
-        budgetSchema.validate($budgetForm, {abortEarly: false}).catch(err => {
-            errors = buildErrors(errors, err);
-        });
+        budgetSchema
+            .validate($budgetForm, { abortEarly: false })
+            .catch((err) => {
+                errors = buildErrors(errors, err);
+            });
     }
 
     async function budgetFormSubmit() {
@@ -47,28 +48,12 @@
     }
 </script>
 
-<form class="budget-form" on:submit|preventDefault={budgetFormSubmit}>
-    <Label forValue="title">
+<form class="budget-form" on:submit|preventDefault="{budgetFormSubmit}">
+    <Label forValue="title" marginBottom="20px">
         Title
-        <Required/>
-        <Input
-            id="title"
-            bind:value={$budgetForm.title}
-        />
+        <Required />
+        <Input id="title" bind:value="{$budgetForm.title}" />
         <Error>{errors.has("title") ? errors.get("title") : ""}</Error>
     </Label>
-    <Button
-        id="budget-form-submit"
-        type="submit"
-        text="Submit"
-        height={40}
-    />
+    <Button id="budget-form-submit" type="submit" text="Submit" height="{40}" />
 </form>
-
-<style lang="scss">
-  .budget-form {
-    label:last-of-type {
-        margin-bottom: 20px;
-    }
-  }
-</style>

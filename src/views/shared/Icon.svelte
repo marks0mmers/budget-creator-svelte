@@ -5,14 +5,14 @@
     export let color = "black";
 
     $: styles = {
-        margin: margin ? `${margin}px` : 'auto',
+        margin: margin ? `${margin}px` : "auto",
         fontSize: `${size}px`,
         color: color,
-    }
+    };
 
     $: cssVarStyles = Object.keys(styles)
         .map((key: keyof typeof styles) => `--${key}:${styles[key]}`)
-        .join(';');
+        .join(";");
 </script>
 
 <i id="icon" class="material-icons icon" style="{cssVarStyles}">{iconName}</i>

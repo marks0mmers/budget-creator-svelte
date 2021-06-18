@@ -1,5 +1,5 @@
-import {IncomeSource, IncomeSourceContract} from "./income-source";
-import {ExpenseSource, ExpenseSourceContract} from "./expense-source";
+import { IncomeSource, IncomeSourceContract } from "./income-source";
+import { ExpenseSource, ExpenseSourceContract } from "./expense-source";
 
 export interface BudgetContract {
     id: number;
@@ -9,13 +9,14 @@ export interface BudgetContract {
     expenseSources: ExpenseSourceContract[];
 }
 
-export type CreateBudgetContract = Pick<BudgetContract, "title">
+export type CreateBudgetContract = Pick<BudgetContract, "title">;
 
 export interface UpdateBudgetContract extends CreateBudgetContract {
     id: number;
 }
 
-interface BudgetRecordContract extends Omit<BudgetContract, "incomeSources" | "expenseSources"> {
+interface BudgetRecordContract
+    extends Omit<BudgetContract, "incomeSources" | "expenseSources"> {
     incomeSources: Map<number, IncomeSource>;
     expenseSources: Map<number, ExpenseSource>;
 }
@@ -32,7 +33,7 @@ export class Budget implements BudgetRecordContract {
         title: string,
         primaryUserId: number,
         incomeSources: Map<number, IncomeSource>,
-        expenseSources: Map<number, ExpenseSource>,
+        expenseSources: Map<number, ExpenseSource>
     ) {
         this.id = id;
         this.title = title;
@@ -41,11 +42,18 @@ export class Budget implements BudgetRecordContract {
         this.expenseSources = expenseSources;
     }
 
-    public static readonly fromContract = (c: BudgetContract) => new Budget(
-        c.id,
-        c.title,
-        c.primaryUserId,
-        c.incomeSources.reduce((map, i) => map.set(i.id, IncomeSource.fromContract(i)), new Map<number, IncomeSource>()),
-        c.expenseSources.reduce((map, e) => map.set(e.id, ExpenseSource.fromContract(e)), new Map<number, ExpenseSource>()),
-    );
+    public static readonly fromContract = (c: BudgetContract) =>
+        new Budget(
+            c.id,
+            c.title,
+            c.primaryUserId,
+            c.incomeSources.reduce(
+                (map, i) => map.set(i.id, IncomeSource.fromContract(i)),
+                new Map<number, IncomeSource>()
+            ),
+            c.expenseSources.reduce(
+                (map, e) => map.set(e.id, ExpenseSource.fromContract(e)),
+                new Map<number, ExpenseSource>()
+            )
+        );
 }

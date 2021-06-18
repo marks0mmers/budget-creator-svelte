@@ -1,4 +1,4 @@
-import {writable} from "svelte/store";
+import { writable } from "svelte/store";
 
 interface Modal {
     id: string;
@@ -8,25 +8,26 @@ interface Modal {
 
 const modals = writable<Modal[]>([]);
 
-const add = (modal: Modal) => modals.update(prev => [...prev, modal]);
+const add = (modal: Modal) => modals.update((prev) => [...prev, modal]);
 
-const remove = (id: string) => modals.update(prev => prev.filter(m => m.id !== id));
+const remove = (id: string) =>
+    modals.update((prev) => prev.filter((m) => m.id !== id));
 
 const open = (id: string) => {
-    const unsubscribe = modals.subscribe(val => {
-        const modal = val.find(x => x.id === id);
+    const unsubscribe = modals.subscribe((val) => {
+        const modal = val.find((x) => x.id === id);
         modal?.open();
     });
     unsubscribe();
-}
+};
 
 const close = (id: string) => {
-    const unsubscribe = modals.subscribe(val => {
-        const modal = val.find(x => x.id === id);
+    const unsubscribe = modals.subscribe((val) => {
+        const modal = val.find((x) => x.id === id);
         modal?.close();
     });
     unsubscribe();
-}
+};
 
 export const modalStore = {
     modals,
@@ -34,4 +35,4 @@ export const modalStore = {
     remove,
     open,
     close,
-}
+};

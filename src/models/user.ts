@@ -18,7 +18,13 @@ export class User implements UserContract {
     lastName: string;
     username: string;
 
-    private constructor(id: number, enabled: boolean, firstName: string, lastName: string, username: string) {
+    private constructor(
+        id: number,
+        enabled: boolean,
+        firstName: string,
+        lastName: string,
+        username: string
+    ) {
         this.id = id;
         this.enabled = enabled;
         this.firstName = firstName;
@@ -26,13 +32,8 @@ export class User implements UserContract {
         this.username = username;
     }
 
-    public static readonly fromContract = (c: UserContract) => new User(
-        c.id,
-        c.enabled,
-        c.firstName,
-        c.lastName,
-        c.username,
-    )
+    public static readonly fromContract = (c: UserContract) =>
+        new User(c.id, c.enabled, c.firstName, c.lastName, c.username);
 
     public get fullName() {
         return `${this.firstName} ${this.lastName} (${this.username})`;

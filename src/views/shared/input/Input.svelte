@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {onMount} from "svelte";
+    import { onMount } from "svelte";
 
     export let id: string;
     export let type = "text";
@@ -7,7 +7,7 @@
     export let value = "";
     export let width = 0;
     export let height = 20;
-    export let isInvalid = false
+    export let isInvalid = false;
     export let gridArea = "";
     export let marginRight = 0;
     export let marginTop = 0;
@@ -30,7 +30,7 @@
         width: width ? `${width}px` : "100%",
         height: `${height}px`,
         fontSize: `${height * 0.75}px`,
-        border: `solid ${isInvalid ? 'red' : '#eeeeee'} 1px`,
+        border: `solid ${isInvalid ? "red" : "#eeeeee"} 1px`,
         gridArea,
         marginRight: `${marginRight}px`,
         marginTop: `${marginTop}px`,
@@ -43,16 +43,11 @@
     };
 
     $: cssVarStyles = Object.keys(styles)
-        .map(key => `--${key}:${styles[key]}`)
-        .join(';');
+        .map((key) => `--${key}:${styles[key]}`)
+        .join(";");
 </script>
 
-<input
-    {id}
-    {required}
-    bind:value
-    style="{cssVarStyles}"
->
+<input id="{id}" required="{required}" bind:value style="{cssVarStyles}" />
 
 <style lang="scss">
     input {
@@ -62,8 +57,10 @@
         border-radius: 3px;
         border: var(--border);
         grid-area: var(--gridArea);
-        margin: var(--marginTop) var(--marginRight) var(--marginBottom) var(--marginLeft);
-        padding: var(--paddingTop) var(--paddingRight) var(--paddingBottom) var(--paddingLeft);
+        margin: var(--marginTop) var(--marginRight) var(--marginBottom)
+            var(--marginLeft);
+        padding: var(--paddingTop) var(--paddingRight) var(--paddingBottom)
+            var(--paddingLeft);
 
         &::placeholder {
             font-size: 12px;

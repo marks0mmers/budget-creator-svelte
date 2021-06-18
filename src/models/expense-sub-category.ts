@@ -4,7 +4,10 @@ export interface ExpenseSubCategoryContract {
     description: string;
 }
 
-export type UpsertExpenseSubCategoryContract = Omit<ExpenseSubCategoryContract, "id">
+export type UpsertExpenseSubCategoryContract = Omit<
+    ExpenseSubCategoryContract,
+    "id"
+>;
 
 export class ExpenseSubCategory implements ExpenseSubCategoryContract {
     id: number;
@@ -17,9 +20,6 @@ export class ExpenseSubCategory implements ExpenseSubCategoryContract {
         this.description = description;
     }
 
-    public static readonly fromContract = (c: ExpenseSubCategoryContract) => new ExpenseSubCategory(
-        c.id,
-        c.name,
-        c.description,
-    )
+    public static readonly fromContract = (c: ExpenseSubCategoryContract) =>
+        new ExpenseSubCategory(c.id, c.name, c.description);
 }

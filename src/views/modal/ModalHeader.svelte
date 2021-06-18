@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {createEventDispatcher} from "svelte";
+    import { createEventDispatcher } from "svelte";
     import Button from "../shared/Button.svelte";
 
     export let title = "";
@@ -7,7 +7,7 @@
     const dispatch = createEventDispatcher();
 
     function exitModal() {
-        dispatch('exitModal');
+        dispatch("exitModal");
     }
 </script>
 
@@ -18,29 +18,29 @@
             id="close-modal"
             icon="clear"
             colorType="transparent"
-            width={50}
-            height={50}
-            on:click={exitModal}
+            width="{50}"
+            height="{50}"
+            on:click="{exitModal}"
         />
     </div>
-    <hr class="divider">
+    <hr class="divider" />
 </div>
 
 <style lang="scss">
-  .header {
-    display: flex;
-    justify-content: space-between;
+    .header {
+        display: flex;
+        justify-content: space-between;
 
-    h2 {
-      display: flex;
-      align-items: center;
+        h2 {
+            display: flex;
+            align-items: center;
+        }
     }
-  }
 
-  .divider {
-    min-height: 1px;
-    background-color: black;
-    border: none;
-    margin: 10px 0;
-  }
+    .divider {
+        min-height: 1px;
+        background-color: black;
+        border: none;
+        margin: 10px 0;
+    }
 </style>

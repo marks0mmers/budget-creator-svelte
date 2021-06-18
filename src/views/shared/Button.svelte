@@ -13,13 +13,13 @@
         },
         secondary: {
             background: "rgb(185, 23, 23)",
-            fontColor: "white"
+            fontColor: "white",
         },
         transparent: {
             background: "transparent",
-            fontColor: "lightgrey"
-        }
-    }
+            fontColor: "lightgrey",
+        },
+    };
 
     export let id: string;
     export let text = "";
@@ -41,44 +41,43 @@
         height: `${height ?? 40}px`,
         margin: `${marginTopBottom ?? 0}px ${marginLeftRight ?? 0}px`,
         gridArea,
-    }
+    };
 
-    let cssVarStyles: string
+    let cssVarStyles: string;
     $: cssVarStyles = Object.keys(styles)
-        .map(key => `--${key}:${styles[key]}`)
-        .join(';');
-
+        .map((key) => `--${key}:${styles[key]}`)
+        .join(";");
 </script>
 
 <button
-    id={id}
-    title={tooltip}
-    {type}
+    id="{id}"
+    title="{tooltip}"
+    type="{type}"
     on:click
     style="{cssVarStyles}"
 >
     {#if icon}
-        <Icon iconName={icon} margin={5} />
+        <Icon iconName="{icon}" margin="{5}" />
     {/if}
     {text}
 </button>
 
 <style lang="scss">
-  button {
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 6px;
-    background: var(--background);
-    color: var(--color);
-    width: var(--width);
-    height: var(--height);
-    margin: var(--margin);
-    grid-area: var(--gridArea);
+    button {
+        border: none;
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 6px;
+        background: var(--background);
+        color: var(--color);
+        width: var(--width);
+        height: var(--height);
+        margin: var(--margin);
+        grid-area: var(--gridArea);
 
-    &:hover {
-      filter: brightness(115%);
+        &:hover {
+            filter: brightness(115%);
+        }
     }
-  }
 </style>
