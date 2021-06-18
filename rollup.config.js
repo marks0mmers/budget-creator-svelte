@@ -51,6 +51,7 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		typeCheck(),
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {
@@ -72,7 +73,6 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
-		typeCheck(),
 		typescript({
 			sourceMap: !production,
 			inlineSources: !production

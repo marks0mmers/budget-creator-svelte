@@ -33,6 +33,7 @@
     export let gridArea = "";
     export let colorType: "primary" | "secondary" | "transparent" = "primary";
 
+    let styles: {};
     $: styles = {
         background: ColorTypes[colorType].background,
         color: ColorTypes[colorType].fontColor,
@@ -42,6 +43,7 @@
         gridArea,
     }
 
+    let cssVarStyles: string
     $: cssVarStyles = Object.keys(styles)
         .map(key => `--${key}:${styles[key]}`)
         .join(';');

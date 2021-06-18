@@ -10,6 +10,7 @@
     export let gridArea = "";
     export let visible: boolean | undefined;
 
+    let styles: {};
     $: styles = {
         opacity: `${visible ? 1 : 0}`,
         transition: `${visible ? 'opacity 0.2s' : 'opacity 0.2s 0.2s'}`,
@@ -17,6 +18,7 @@
         gridArea,
     }
 
+    let cssVarStyles: string;
     $: cssVarStyles = Object.keys(styles)
         .map(key => `--${key}:${styles[key]}`)
         .join(';');
