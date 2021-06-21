@@ -1,8 +1,5 @@
 import { ExpenseCategory, ExpenseCategoryContract } from "./expense-category";
-import {
-    ExpenseSubCategory,
-    ExpenseSubCategoryContract,
-} from "./expense-sub-category";
+import { ExpenseSubCategory, ExpenseSubCategoryContract } from "./expense-sub-category";
 
 export interface ExpenseSourceContract {
     id: number;
@@ -15,7 +12,7 @@ export interface ExpenseSourceContract {
 export interface UpsertExpenseSourceContract
     extends Omit<ExpenseSourceContract, "id" | "category" | "subCategory"> {
     categoryId: number;
-    subCategoryId: number;
+    subCategoryId?: number;
 }
 
 export interface ExpenseSourceRecord
@@ -36,7 +33,7 @@ export class ExpenseSource implements ExpenseSourceRecord {
         name: string,
         amount: number,
         category: ExpenseCategory,
-        subCategory?: ExpenseSubCategory
+        subCategory?: ExpenseSubCategory,
     ) {
         this.id = id;
         this.name = name;
@@ -51,6 +48,6 @@ export class ExpenseSource implements ExpenseSourceRecord {
             e.name,
             e.amount,
             ExpenseCategory.fromContract(e.category),
-            e.subCategory && ExpenseSubCategory.fromContract(e.subCategory)
+            e.subCategory && ExpenseSubCategory.fromContract(e.subCategory),
         );
 }

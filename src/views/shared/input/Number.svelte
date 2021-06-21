@@ -55,10 +55,8 @@
         border-radius: 3px;
         border: var(--border);
         grid-area: var(--gridArea);
-        margin: var(--marginTop) var(--marginRight) var(--marginBottom)
-            var(--marginLeft);
-        padding: var(--paddingTop) var(--paddingRight) var(--paddingBottom)
-            var(--paddingLeft);
+        margin: var(--marginTop) var(--marginRight) var(--marginBottom) var(--marginLeft);
+        padding: var(--paddingTop) var(--paddingRight) var(--paddingBottom) var(--paddingLeft);
 
         &::placeholder {
             font-size: 12px;

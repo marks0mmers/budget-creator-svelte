@@ -1,6 +1,5 @@
 <script lang="ts">
     import HeaderButton from "../shared/header/HeaderButton.svelte";
-    import { onMount } from "svelte";
     import { budgetStore } from "../../store/budget.store";
     import Modal from "../modal/Modal.svelte";
     import ModalHeader from "../modal/ModalHeader.svelte";
@@ -23,18 +22,9 @@
             await budgetStore.deleteBudget($selectedBudgetId);
         }
     }
-
-    onMount(async () => {
-        await budgetStore.getBudgets();
-    });
 </script>
 
-<HeaderButton
-    id="add-budget-button"
-    text="Add Budget"
-    icon="add"
-    on:click="{addBudgetClick}"
-/>
+<HeaderButton id="add-budget-button" text="Add Budget" icon="add" on:click="{addBudgetClick}" />
 <HeaderButton
     id="delete-budget-button"
     text="Delete Budget"

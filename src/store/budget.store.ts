@@ -4,33 +4,27 @@ import { http } from "../util/fetch-utils";
 
 const budgets = writable(new Map<number, Budget>());
 const selectedBudgetId = writable<number | undefined>(
-    Number(localStorage.getItem("selectedBudget")) || undefined
+    Number(localStorage.getItem("selectedBudget")) || undefined,
 );
 
-const selectedBudget = derived(
-    [budgets, selectedBudgetId],
-    ([$budgets, $selectedBudgetId]) =>
-        $selectedBudgetId ? $budgets.get($selectedBudgetId) : undefined
+const selectedBudget = derived([budgets, selectedBudgetId], ([$budgets, $selectedBudgetId]) =>
+    $selectedBudgetId ? $budgets.get($selectedBudgetId) : undefined,
 );
 
 selectedBudgetId.subscribe((budgetId) =>
-    localStorage.setItem("selectedBudget", budgetId?.toString() ?? "")
+    localStorage.setItem("selectedBudget", budgetId?.toString() ?? ""),
 );
 
 const getBudgets = async () => {
     const res = await http("/api/budgets");
     const budgetContracts: BudgetContract[] = await res.json();
-    budgets.set(
-        new Map(budgetContracts.map(Budget.fromContract).map((b) => [b.id, b]))
-    );
+    budgets.set(new Map(budgetContracts.map(Budget.fromContract).map((b) => [b.id, b])));
 };
 
 const createBudget = async (budgetContract: CreateBudgetContract) => {
     const res = await http("/api/budgets", "POST", budgetContract);
     const budget: BudgetContract = await res.json();
-    budgets.update((oldBudgets) =>
-        oldBudgets.set(budget.id, Budget.fromContract(budget))
-    );
+    budgets.update((oldBudgets) => oldBudgets.set(budget.id, Budget.fromContract(budget)));
 };
 
 const deleteBudget = async (budgetId: number) => {

@@ -1,7 +1,7 @@
 <script lang="ts">
     export let id: string;
     export let required = false;
-    export let value = "";
+    export let value: string | number = "";
     export let width = 0;
     export let height = 20;
     export let isInvalid = false;
@@ -38,10 +38,12 @@
         .join(";");
 </script>
 
-<input id="{id}" required="{required}" bind:value style="{cssVarStyles}" />
+<select id="{id}" required="{required}" bind:value style="{cssVarStyles}">
+    <slot />
+</select>
 
 <style lang="scss">
-    input {
+    select {
         height: var(--height);
         font-size: var(--fontSize);
         width: var(--width);

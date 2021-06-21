@@ -30,11 +30,9 @@
     });
 
     $: if (submitted) {
-        budgetSchema
-            .validate($budgetForm, { abortEarly: false })
-            .catch((err) => {
-                errors = buildErrors(errors, err);
-            });
+        budgetSchema.validate($budgetForm, { abortEarly: false }).catch((err) => {
+            errors = buildErrors(errors, err);
+        });
     }
 
     async function budgetFormSubmit() {

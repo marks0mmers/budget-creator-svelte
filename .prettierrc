@@ -1,5 +1,7 @@
 {
     "tabWidth": 4,
     "svelteStrictMode": true,
-    "svelteAllowShorthand": true
+    "svelteAllowShorthand": true,
+    "trailingComma": "all",
+    "printWidth": 100
 }

@@ -15,8 +15,7 @@ export interface UpdateBudgetContract extends CreateBudgetContract {
     id: number;
 }
 
-interface BudgetRecordContract
-    extends Omit<BudgetContract, "incomeSources" | "expenseSources"> {
+interface BudgetRecordContract extends Omit<BudgetContract, "incomeSources" | "expenseSources"> {
     incomeSources: Map<number, IncomeSource>;
     expenseSources: Map<number, ExpenseSource>;
 }
@@ -33,7 +32,7 @@ export class Budget implements BudgetRecordContract {
         title: string,
         primaryUserId: number,
         incomeSources: Map<number, IncomeSource>,
-        expenseSources: Map<number, ExpenseSource>
+        expenseSources: Map<number, ExpenseSource>,
     ) {
         this.id = id;
         this.title = title;
@@ -49,11 +48,11 @@ export class Budget implements BudgetRecordContract {
             c.primaryUserId,
             c.incomeSources.reduce(
                 (map, i) => map.set(i.id, IncomeSource.fromContract(i)),
-                new Map<number, IncomeSource>()
+                new Map<number, IncomeSource>(),
             ),
             c.expenseSources.reduce(
                 (map, e) => map.set(e.id, ExpenseSource.fromContract(e)),
-                new Map<number, ExpenseSource>()
-            )
+                new Map<number, ExpenseSource>(),
+            ),
         );
 }

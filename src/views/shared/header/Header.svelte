@@ -15,6 +15,10 @@
     }
 
     function logOut() {}
+
+    $: if ($currentUser) {
+        budgetStore.getBudgets();
+    }
 </script>
 
 {#if $location.pathname !== "/login"}
@@ -27,8 +31,7 @@
             {/each}
         </select>
         <div id="header-buttons" class="buttons-container"></div>
-        <span class="username">{$currentUser?.fullName || "Please Log In"}</span
-        >
+        <span class="username">{$currentUser?.fullName || "Please Log In"}</span>
         <Button
             id="login-logout-container"
             text="{$currentUser ? 'Log Out' : 'Log In'}"

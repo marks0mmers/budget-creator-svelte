@@ -55,32 +55,19 @@
     <section class="login-container">
         <h1 class="title">Login to Budget Creator</h1>
         <form class="login-form" on:submit|preventDefault="{loginSubmit}">
-            <Label forValue="username">
+            <Label forValue="username" marginBottom="10px">
                 Username
                 <Required />
                 <Input id="username" bind:value="{$loginForm.username}" />
-                <Error
-                    >{errors.has("username")
-                        ? errors.get("username")
-                        : ""}</Error
-                >
+                <Error>{errors.has("username") ? errors.get("username") : ""}</Error>
             </Label>
-            <Label forValue="password">
+            <Label forValue="password" marginBottom="10px">
                 Password
                 <Required />
                 <Password id="password" bind:value="{$loginForm.password}" />
-                <Error
-                    >{errors.has("password")
-                        ? errors.get("password")
-                        : ""}</Error
-                >
+                <Error>{errors.has("password") ? errors.get("password") : ""}</Error>
             </Label>
-            <Button
-                id="login-form-submit"
-                type="submit"
-                text="Submit"
-                height="{40}"
-            />
+            <Button id="login-form-submit" type="submit" text="Submit" height="{40}" />
         </form>
     </section>
 </main>

@@ -21,7 +21,7 @@
 {/if}
 <Router>
     <Header />
-    <Route path="/login">
+    <Route path="/login" primary="{false}">
         <Login />
     </Route>
     <Route path="" primary="{false}">

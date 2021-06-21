@@ -10,8 +10,7 @@ const modals = writable<Modal[]>([]);
 
 const add = (modal: Modal) => modals.update((prev) => [...prev, modal]);
 
-const remove = (id: string) =>
-    modals.update((prev) => prev.filter((m) => m.id !== id));
+const remove = (id: string) => modals.update((prev) => prev.filter((m) => m.id !== id));
 
 const open = (id: string) => {
     const unsubscribe = modals.subscribe((val) => {

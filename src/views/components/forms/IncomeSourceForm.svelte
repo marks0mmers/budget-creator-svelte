@@ -15,8 +15,7 @@
 
     export let budgetId: number;
     export let incomeSourceId = 0;
-    export let initialValues: UpsertIncomeSourceContract | undefined =
-        undefined;
+    export let initialValues: UpsertIncomeSourceContract | undefined = undefined;
 
     const dispatch = createEventDispatcher();
 
@@ -26,7 +25,7 @@
         initialValues || {
             name: "",
             amount: 0,
-        }
+        },
     );
 
     incomeSourceForm.subscribe(() => {
@@ -35,18 +34,14 @@
 
     const incomeSourceSchema = object().shape({
         name: string().required("Name is required"),
-        amount: number()
-            .required("Amount is required")
-            .min(1, "Amount must be positive"),
+        amount: number().required("Amount is required").min(1, "Amount must be positive"),
     });
 
     $: if (submitted) {
-        incomeSourceSchema
-            .validate($incomeSourceForm, { abortEarly: false })
-            .catch((err) => {
-                const errors = buildErrors(new Map<string, string>(), err);
-                errors.forEach((error) => fail(error));
-            });
+        incomeSourceSchema.validate($incomeSourceForm, { abortEarly: false }).catch((err) => {
+            const errors = buildErrors(new Map<string, string>(), err);
+            errors.forEach((error) => fail(error));
+        });
     }
 
     async function incomeSourceSubmit() {
@@ -56,13 +51,10 @@
                 await incomeSourceStore.updateIncomeSource(
                     budgetId,
                     incomeSourceId,
-                    $incomeSourceForm
+                    $incomeSourceForm,
                 );
             } else {
-                await incomeSourceStore.addIncomeSource(
-                    budgetId,
-                    $incomeSourceForm
-                );
+                await incomeSourceStore.addIncomeSource(budgetId, $incomeSourceForm);
             }
             hideForm();
         }
@@ -73,10 +65,7 @@
     }
 </script>
 
-<form
-    class="income-source-form"
-    on:submit|preventDefault="{incomeSourceSubmit}"
->
+<form class="income-source-form" on:submit|preventDefault="{incomeSourceSubmit}">
     <CircleButton
         id="cancel-edit"
         icon="clear"
@@ -95,12 +84,7 @@
         <Required />
         <Number id="amount" bind:value="{$incomeSourceForm.amount}" />
     </Label>
-    <Button
-        id="income-source-form-submit"
-        type="submit"
-        icon="save"
-        height="{40}"
-    />
+    <Button id="income-source-form-submit" type="submit" icon="save" height="{40}" />
 </form>
 
 <style lang="scss">

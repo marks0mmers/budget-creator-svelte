@@ -3,15 +3,12 @@ import { fail } from "./toast-utils";
 
 const fetchUtils = (
     method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
-    body?: unknown
+    body?: unknown,
 ): RequestInit => {
     const headers = new Headers();
     headers.set("Content-Type", "application/json");
     if (localStorage.getItem("jwtToken")) {
-        headers.set(
-            "Authorization",
-            `Bearer ${localStorage.getItem("jwtToken")}`
-        );
+        headers.set("Authorization", `Bearer ${localStorage.getItem("jwtToken")}`);
     }
     return {
         method,
@@ -23,7 +20,7 @@ const fetchUtils = (
 export const http = async (
     url: string,
     method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
-    body?: unknown
+    body?: unknown,
 ) => {
     loadingStore.show();
     const res = await fetch(url, fetchUtils(method, body));

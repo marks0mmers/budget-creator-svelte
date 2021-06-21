@@ -4,11 +4,7 @@
     export let marginBottom = "0px";
 </script>
 
-<label
-    class="label"
-    for="{forValue}"
-    style="margin-bottom: {marginBottom}; grid-area: {gridArea}"
->
+<label class="label" for="{forValue}" style="margin-bottom: {marginBottom}; grid-area: {gridArea}">
     <slot />
 </label>
 

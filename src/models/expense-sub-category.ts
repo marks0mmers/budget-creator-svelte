@@ -3,10 +3,7 @@ export interface ExpenseSubCategoryContract {
     name: string;
 }
 
-export type UpsertExpenseSubCategoryContract = Omit<
-    ExpenseSubCategoryContract,
-    "id"
->;
+export type UpsertExpenseSubCategoryContract = Omit<ExpenseSubCategoryContract, "id">;
 
 export class ExpenseSubCategory implements ExpenseSubCategoryContract {
     id: number;

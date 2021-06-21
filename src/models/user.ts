@@ -23,7 +23,7 @@ export class User implements UserContract {
         enabled: boolean,
         firstName: string,
         lastName: string,
-        username: string
+        username: string,
     ) {
         this.id = id;
         this.enabled = enabled;

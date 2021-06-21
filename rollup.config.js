@@ -74,17 +74,11 @@ export default {
                 dirs: ["public"],
                 host: "localhost",
                 port: 5000,
+                spa: "public/index.html",
                 proxy: {
-                    "/api/*": [
-                        "localhost:8000",
-                        { proxyReqPathResolver: (ctx) => ctx.url },
-                    ],
+                    "/api/*": ["localhost:8000", { proxyReqPathResolver: (ctx) => ctx.url }],
                 },
             }),
-
-        // In dev mode, call `npm run start` once
-        // the bundle has been generated
-        // !production && serve(),
 
         // Watch the `public` directory and refresh the
         // browser on changes when not in production

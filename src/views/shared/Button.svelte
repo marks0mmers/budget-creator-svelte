@@ -35,8 +35,7 @@
     export let marginTopBottom = 0;
     export let marginLeftRight = 0;
     export let gridArea = "";
-    export let colorType: "primary" | "secondary" | "tertiary" | "transparent" =
-        "primary";
+    export let colorType: "primary" | "secondary" | "tertiary" | "transparent" = "primary";
 
     let styles: { [key: string]: string };
     $: styles = {
@@ -54,13 +53,7 @@
         .join(";");
 </script>
 
-<button
-    id="{id}"
-    title="{tooltip}"
-    type="{type}"
-    on:click
-    style="{cssVarStyles}"
->
+<button id="{id}" title="{tooltip}" type="{type}" on:click style="{cssVarStyles}">
     {#if icon}
         <Icon iconName="{icon}" margin="{5}" />
     {/if}

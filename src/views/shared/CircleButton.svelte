@@ -24,13 +24,7 @@
         .join(";");
 </script>
 
-<button
-    id="{id}"
-    title="{tooltip}"
-    type="{type}"
-    on:click
-    style="{cssVarStyles}"
->
+<button id="{id}" title="{tooltip}" type="{type}" on:click style="{cssVarStyles}">
     <Icon iconName="{icon}" size="{16}" color="white" />
 </button>
 

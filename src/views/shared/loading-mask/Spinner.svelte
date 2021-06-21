@@ -71,8 +71,7 @@
                 transform: rotate(45deg);
 
                 &::before {
-                    animation: 0.8s linear 0.1s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.1s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
@@ -81,8 +80,7 @@
                 transform: rotate(90deg);
 
                 &::before {
-                    animation: 0.8s linear 0.2s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.2s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
@@ -91,8 +89,7 @@
                 transform: rotate(135deg);
 
                 &::before {
-                    animation: 0.8s linear 0.3s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.3s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
@@ -101,8 +98,7 @@
                 transform: rotate(180deg);
 
                 &::before {
-                    animation: 0.8s linear 0.4s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.4s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
@@ -111,8 +107,7 @@
                 transform: rotate(225deg);
 
                 &::before {
-                    animation: 0.8s linear 0.5s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.5s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
@@ -121,8 +116,7 @@
                 transform: rotate(270deg);
 
                 &::before {
-                    animation: 0.8s linear 0.6s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.6s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
@@ -131,8 +125,7 @@
                 transform: rotate(315deg);
 
                 &::before {
-                    animation: 0.8s linear 0.7s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.7s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
@@ -141,8 +134,7 @@
                 transform: rotate(360deg);
 
                 &::before {
-                    animation: 0.8s linear 0.8s normal none infinite running
-                        load;
+                    animation: 0.8s linear 0.8s normal none infinite running load;
                     background: #333333 none repeat scroll 0 0;
                 }
             }
