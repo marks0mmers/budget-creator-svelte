@@ -13,7 +13,11 @@
     import Select from "../../shared/input/Select.svelte";
     import { expenseCategoryStore } from "../../../store/expense-category.store";
     import type { ExpenseSubCategory } from "../../../models/expense-sub-category";
+    import type { ExpenseSource } from "../../../models/expense-source";
+    import { expenseSourceStore } from "../../../store/expense-source.store";
+    import { budgetStore } from "../../../store/budget.store";
 
+    const { selectedBudgetId } = budgetStore;
     const { expenseCategories } = expenseCategoryStore;
     const expenseCategoryValues = derived(expenseCategories, (categories) => [
         ...categories.values(),
@@ -21,13 +25,16 @@
 
     const dispatch = createEventDispatcher();
 
+    export let initialValues: ExpenseSource | undefined = undefined;
+
     let submitted = false;
     let errors = new Map<string, string>();
 
     const expenseSourceForm = writable<UpsertExpenseSourceContract>({
-        name: "",
-        amount: 0,
-        categoryId: 0,
+        name: initialValues?.name ?? "",
+        amount: initialValues?.amount ?? 0,
+        categoryId: initialValues?.category?.id ?? 0,
+        subCategoryId: initialValues?.subCategory?.id ?? undefined,
     });
 
     expenseSourceForm.subscribe(() => {
@@ -59,9 +66,17 @@
     async function expenseSourceFormSubmit() {
         submitted = true;
         const isValid = await expenseSourceSchema.isValid($expenseSourceForm);
-        if (isValid) {
+        if (isValid && $selectedBudgetId) {
             dispatch("exitModal");
-            console.log($expenseSourceForm);
+            if (initialValues) {
+                await expenseSourceStore.updateExpenseSource(
+                    $selectedBudgetId,
+                    initialValues.id,
+                    $expenseSourceForm,
+                );
+            } else {
+                await expenseSourceStore.createExpenseSource($selectedBudgetId, $expenseSourceForm);
+            }
         }
     }
 </script>

@@ -54,7 +54,7 @@
                     $incomeSourceForm,
                 );
             } else {
-                await incomeSourceStore.addIncomeSource(budgetId, $incomeSourceForm);
+                await incomeSourceStore.createIncomeSource(budgetId, $incomeSourceForm);
             }
             hideForm();
         }

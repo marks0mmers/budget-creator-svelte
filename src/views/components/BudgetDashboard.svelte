@@ -11,6 +11,7 @@
         <SourcesList
             budgetId="{$selectedBudget.id}"
             incomeSources="{$selectedBudget.incomeSources}"
+            expenseSources="{$selectedBudget.expenseSources}"
         />
         <Categories />
     {/if}

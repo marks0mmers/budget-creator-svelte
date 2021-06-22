@@ -6,15 +6,17 @@
     import IncomeSourceForm from "./forms/IncomeSourceForm.svelte";
     import Modal from "../modal/Modal.svelte";
     import ModalHeader from "../modal/ModalHeader.svelte";
-    import { modalStore } from "../../store/modal.store";
     import ExpenseSourceForm from "./forms/ExpenseSourceForm.svelte";
+    import ExpenseSourcesTree from "./ExpenseSourcesTree.svelte";
+    import { ExpenseSourceTree } from "../../models/expense-source-tree";
 
-    export let budgetId = 0;
-    export let incomeSources = new Map<number, IncomeSource>();
-    export let expenseSources = new Map<number, ExpenseSource>();
+    export let budgetId: number;
+    export let incomeSources: Map<number, IncomeSource>;
+    export let expenseSources: Map<number, ExpenseSource>;
 
     let mouseInIncomeLabel = false;
     let incomeFormShowing = false;
+    let expenseFormShowing = false;
 
     let mouseInExpenseLabel = false;
 
@@ -23,24 +25,25 @@
         a.name.localeCompare(b.name),
     );
 
-    let expenseSourceValues: ExpenseSource[];
-    $: expenseSourceValues = [...expenseSources.values()].sort((a, b) =>
-        a.name.localeCompare(b.name),
-    );
+    let expenseSourceTree = new ExpenseSourceTree(expenseSources);
 
     let incomeTotals: string;
     $: incomeTotals = incomeSourceValues.reduce((total, i) => total + i.amount, 0).toFixed(2);
 
     let expenseTotals: string;
-    $: expenseTotals = expenseSourceValues.reduce((total, i) => total + i.amount, 0).toFixed(2);
+    $: expenseTotals = [...expenseSources.values()]
+        .reduce((total, i) => total + i.amount, 0)
+        .toFixed(2);
 
     function openExpenseSourceModal() {
-        modalStore.open("add-expense-source-modal");
+        expenseFormShowing = true;
     }
 
     function closeExpenseSourceModal() {
-        modalStore.close("add-expense-source-modal");
+        expenseFormShowing = false;
     }
+
+    $: console.log(expenseSourceTree);
 </script>
 
 <section class="sources">
@@ -80,23 +83,37 @@
     >
         Expense Sources
         <CircleButton
+            id="expand-tree"
+            icon="unfold_more"
+            visible="{mouseInExpenseLabel}"
+            on:click="{() => (expenseSourceTree = expenseSourceTree.expandAll())}"
+        />
+        <CircleButton
+            id="collapse-tree"
+            icon="unfold_less"
+            visible="{mouseInExpenseLabel}"
+            on:click="{() => (expenseSourceTree = expenseSourceTree.collapseAll())}"
+        />
+        <CircleButton
             id="add-expense-source"
             icon="add"
             visible="{mouseInExpenseLabel}"
             on:click="{openExpenseSourceModal}"
         />
     </h3>
-    <div id="expense-sources-container"></div>
+    <ExpenseSourcesTree budgetId="{budgetId}" bind:expenseSourceTree />
     <footer class="expense-total">
         <span>Total</span>
         <span class="total">${expenseTotals}</span>
     </footer>
 </section>
 
-<Modal id="add-expense-source-modal">
-    <ModalHeader title="Expense Source Form" on:exitModal="{closeExpenseSourceModal}" />
-    <ExpenseSourceForm on:exitModal="{closeExpenseSourceModal}" />
-</Modal>
+{#if expenseFormShowing}
+    <Modal on:exitModal="{closeExpenseSourceModal}">
+        <ModalHeader title="Expense Source Form" on:exitModal="{closeExpenseSourceModal}" />
+        <ExpenseSourceForm on:exitModal="{closeExpenseSourceModal}" />
+    </Modal>
+{/if}
 
 <style lang="scss">
     .sources {
@@ -110,12 +127,17 @@
         .expense-sources-label {
             padding: 10px;
             display: grid;
-            grid-template-columns: 1fr auto;
             font-weight: normal;
             border-bottom: 1px solid lightgray;
         }
 
+        .income-sources-label {
+            grid-template-columns: 1fr auto;
+        }
+
         .expense-sources-label {
+            grid-template-columns: 1fr auto auto auto;
+            column-gap: 5px;
             border-top: 1px solid lightgray;
         }
 

@@ -1,57 +1,35 @@
 <script lang="ts">
-    import { onDestroy, onMount } from "svelte";
-    import { modalStore } from "../../store/modal.store";
+    import { createEventDispatcher, onMount } from "svelte";
 
-    export let id = "";
+    const dispatch = createEventDispatcher();
 
     let ref: HTMLDivElement;
 
     const modalBox = document.getElementById("modal-box");
 
-    function open() {
-        ref.style.display = "block";
-        modalBox?.classList.add("modal-open");
-    }
-
-    function close() {
-        ref.style.display = "none";
-        modalBox?.classList.remove("modal-open");
-    }
-
     onMount(() => {
         if (ref) {
             modalBox?.appendChild(ref);
             ref.addEventListener("click", (el: any) => {
-                if (el.target.className === "modal") {
-                    close();
+                if (el.target.className.includes("modal")) {
+                    dispatch("exitModal");
                 }
             });
         }
-        modalStore.add({
-            id,
-            open,
-            close,
-        });
-    });
-
-    onDestroy(() => {
-        modalStore.remove(id);
     });
 </script>
 
 <div id="host" bind:this="{ref}">
     <div class="modal">
-        <div class="modal-body">
+        <div class="body">
             <slot />
         </div>
     </div>
-    <div class="modal-background"></div>
+    <div class="background"></div>
 </div>
 
 <style lang="scss">
     #host {
-        display: none;
-
         .modal {
             position: fixed;
             top: 0;
@@ -71,7 +49,7 @@
                 ". content ."
                 ". . .";
 
-            .modal-body {
+            .body {
                 min-width: 400px;
                 grid-area: content;
                 background: #fff;
@@ -80,7 +58,7 @@
             }
         }
 
-        .modal-background {
+        .background {
             position: fixed;
             top: 0;
             right: 0;

@@ -4,7 +4,7 @@ import type { BudgetContract } from "../models/budget";
 import { budgetStore } from "./budget.store";
 import { Budget } from "../models/budget";
 
-const addIncomeSource = async (
+const createIncomeSource = async (
     budgetId: number,
     incomeSourceContract: UpsertIncomeSourceContract,
 ) => {
@@ -34,7 +34,7 @@ const deleteIncomeSource = async (budgetId: number, incomeSourceId: number) => {
 };
 
 export const incomeSourceStore = {
-    addIncomeSource,
+    createIncomeSource,
     updateIncomeSource,
     deleteIncomeSource,
 };

@@ -3,18 +3,19 @@
     import { budgetStore } from "../../store/budget.store";
     import Modal from "../modal/Modal.svelte";
     import ModalHeader from "../modal/ModalHeader.svelte";
-    import { modalStore } from "../../store/modal.store";
     import BudgetForm from "../components/forms/BudgetForm.svelte";
     import BudgetDashboard from "../components/BudgetDashboard.svelte";
 
     const { selectedBudgetId } = budgetStore;
 
+    let budgetFormShowing = false;
+
     function addBudgetClick() {
-        modalStore.open("add-budget-modal");
+        budgetFormShowing = true;
     }
 
     function closeBudgetModal() {
-        modalStore.close("add-budget-modal");
+        budgetFormShowing = false;
     }
 
     async function deleteBudget() {
@@ -34,7 +35,9 @@
 
 <BudgetDashboard />
 
-<Modal id="add-budget-modal">
-    <ModalHeader title="Budget Form" on:exitModal="{closeBudgetModal}" />
-    <BudgetForm on:exitModal="{closeBudgetModal}" />
-</Modal>
+{#if budgetFormShowing}
+    <Modal on:exitModal="{closeBudgetModal}">
+        <ModalHeader title="Budget Form" on:exitModal="{closeBudgetModal}" />
+        <BudgetForm on:exitModal="{closeBudgetModal}" />
+    </Modal>
+{/if}
