@@ -30,7 +30,7 @@
     });
 
     $: if (submitted) {
-        budgetSchema.validate($budgetForm, { abortEarly: false }).catch((err) => {
+        budgetSchema.validate($budgetForm, { abortEarly: false }).catch(err => {
             errors = buildErrors(errors, err);
         });
     }

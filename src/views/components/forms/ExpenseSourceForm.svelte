@@ -19,7 +19,7 @@
 
     const { selectedBudgetId } = budgetStore;
     const { expenseCategories } = expenseCategoryStore;
-    const expenseCategoryValues = derived(expenseCategories, (categories) => [
+    const expenseCategoryValues = derived(expenseCategories, categories => [
         ...categories.values(),
     ]);
 
@@ -49,7 +49,7 @@
     });
 
     $: if (submitted) {
-        expenseSourceSchema.validate($expenseSourceForm, { abortEarly: false }).catch((err) => {
+        expenseSourceSchema.validate($expenseSourceForm, { abortEarly: false }).catch(err => {
             errors = buildErrors(errors, err);
         });
     }

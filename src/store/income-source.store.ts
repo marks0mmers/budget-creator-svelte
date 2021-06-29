@@ -10,7 +10,7 @@ const createIncomeSource = async (
 ) => {
     const res = await http(`/api/budgets/${budgetId}/incomeSource`, "POST", incomeSourceContract);
     const budget: BudgetContract = await res.json();
-    budgetStore.budgets.update((budgets) => budgets.set(budget.id, Budget.fromContract(budget)));
+    budgetStore.budgets.update(budgets => budgets.set(budget.id, Budget.fromContract(budget)));
 };
 
 const updateIncomeSource = async (
@@ -24,13 +24,13 @@ const updateIncomeSource = async (
         incomeSourceContract,
     );
     const budget: BudgetContract = await res.json();
-    budgetStore.budgets.update((budgets) => budgets.set(budget.id, Budget.fromContract(budget)));
+    budgetStore.budgets.update(budgets => budgets.set(budget.id, Budget.fromContract(budget)));
 };
 
 const deleteIncomeSource = async (budgetId: number, incomeSourceId: number) => {
     const res = await http(`/api/budgets/${budgetId}/incomeSource/${incomeSourceId}`, "DELETE");
     const budget: BudgetContract = await res.json();
-    budgetStore.budgets.update((budgets) => budgets.set(budget.id, Budget.fromContract(budget)));
+    budgetStore.budgets.update(budgets => budgets.set(budget.id, Budget.fromContract(budget)));
 };
 
 export const incomeSourceStore = {

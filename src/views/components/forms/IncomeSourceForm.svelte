@@ -38,9 +38,9 @@
     });
 
     $: if (submitted) {
-        incomeSourceSchema.validate($incomeSourceForm, { abortEarly: false }).catch((err) => {
+        incomeSourceSchema.validate($incomeSourceForm, { abortEarly: false }).catch(err => {
             const errors = buildErrors(new Map<string, string>(), err);
-            errors.forEach((error) => fail(error));
+            errors.forEach(error => fail(error));
         });
     }
 

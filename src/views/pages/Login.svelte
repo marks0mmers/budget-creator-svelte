@@ -34,7 +34,7 @@
     });
 
     $: if (submitted) {
-        loginSchema.validate($loginForm, { abortEarly: false }).catch((err) => {
+        loginSchema.validate($loginForm, { abortEarly: false }).catch(err => {
             errors = buildErrors(errors, err);
         });
     }

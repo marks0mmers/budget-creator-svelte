@@ -19,14 +19,14 @@ const getExpenseCategories = async () => {
     const res = await http("/api/expenseCategories");
     const expenseCategoryContracts: ExpenseCategoryContract[] = await res.json();
     expenseCategories.set(
-        new Map(expenseCategoryContracts.map(ExpenseCategory.fromContract).map((e) => [e.id, e])),
+        new Map(expenseCategoryContracts.map(ExpenseCategory.fromContract).map(e => [e.id, e])),
     );
 };
 
 const createExpenseCategory = async (expenseCategoryContract: UpsertExpenseCategoryContract) => {
     const res = await http("/api/expenseCategories", "POST", expenseCategoryContract);
     const expenseCategory: ExpenseCategoryContract = await res.json();
-    expenseCategories.update((oldExpenseCategories) =>
+    expenseCategories.update(oldExpenseCategories =>
         oldExpenseCategories.set(expenseCategory.id, ExpenseCategory.fromContract(expenseCategory)),
     );
 };
@@ -37,7 +37,7 @@ const updateExpenseCategory = async (
 ) => {
     const res = await http(`/api/expenseCategories/${id}`, "PUT", expenseCategoryContract);
     const expenseCategory: ExpenseCategoryContract = await res.json();
-    expenseCategories.update((oldExpenseCategories) =>
+    expenseCategories.update(oldExpenseCategories =>
         oldExpenseCategories.set(expenseCategory.id, ExpenseCategory.fromContract(expenseCategory)),
     );
 };
@@ -45,7 +45,7 @@ const updateExpenseCategory = async (
 const deleteExpenseCategory = async (id: number) => {
     const res = await http(`/api/expenseCategories/${id}`, "DELETE");
     const expenseCategory: ExpenseCategoryContract = await res.json();
-    expenseCategories.update((oldExpenseCategories) => {
+    expenseCategories.update(oldExpenseCategories => {
         oldExpenseCategories.delete(expenseCategory.id);
         return oldExpenseCategories;
     });

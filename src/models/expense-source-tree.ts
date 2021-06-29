@@ -42,11 +42,11 @@ export class ExpenseSourceTree {
         if (subCategoryId) {
             return this.categorySubCategoryToExpenseSources
                 .get(`${categoryId}-${subCategoryId}`)
-                ?.map((id) => this.expenseSources.get(id)!);
+                ?.map(id => this.expenseSources.get(id)!);
         }
         return this.categoriesToExpenseSources
             .get(categoryId.toString())
-            ?.map((id) => this.expenseSources.get(id)!);
+            ?.map(id => this.expenseSources.get(id)!);
     }
 
     public isCollapsed(categoryId: number, subCategoryId?: number) {
@@ -73,20 +73,20 @@ export class ExpenseSourceTree {
     }
 
     public expandAll() {
-        [...this.collapsedCategories.keys()].forEach((key) => {
+        [...this.collapsedCategories.keys()].forEach(key => {
             this.collapsedCategories = this.collapsedCategories.set(key, false);
         });
-        [...this.collapsedSubCategories.keys()].forEach((key) => {
+        [...this.collapsedSubCategories.keys()].forEach(key => {
             this.collapsedSubCategories = this.collapsedSubCategories.set(key, false);
         });
         return this;
     }
 
     public collapseAll() {
-        [...this.collapsedCategories.keys()].forEach((key) => {
+        [...this.collapsedCategories.keys()].forEach(key => {
             this.collapsedCategories = this.collapsedCategories.set(key, true);
         });
-        [...this.collapsedSubCategories.keys()].forEach((key) => {
+        [...this.collapsedSubCategories.keys()].forEach(key => {
             this.collapsedSubCategories = this.collapsedSubCategories.set(key, true);
         });
         return this;

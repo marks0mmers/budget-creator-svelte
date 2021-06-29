@@ -17,7 +17,7 @@ const createExpenseSubCategory = async (
         subCategoryContract,
     );
     const expenseCategory: ExpenseCategoryContract = await res.json();
-    expenseCategoryStore.expenseCategories.update((expenseCategories) =>
+    expenseCategoryStore.expenseCategories.update(expenseCategories =>
         expenseCategories.set(expenseCategory.id, ExpenseCategory.fromContract(expenseCategory)),
     );
 };
@@ -33,7 +33,7 @@ const updateExpenseSubCategory = async (
         subCategoryContract,
     );
     const expenseCategory: ExpenseCategoryContract = await res.json();
-    expenseCategoryStore.expenseCategories.update((expenseCategories) =>
+    expenseCategoryStore.expenseCategories.update(expenseCategories =>
         expenseCategories.set(expenseCategory.id, ExpenseCategory.fromContract(expenseCategory)),
     );
 };
@@ -44,7 +44,7 @@ const deleteExpenseSubCategory = async (categoryId: number, subCategoryId: numbe
         "DELETE",
     );
     const expenseCategory: ExpenseCategoryContract = await res.json();
-    expenseCategoryStore.expenseCategories.update((expenseCategories) =>
+    expenseCategoryStore.expenseCategories.update(expenseCategories =>
         expenseCategories.set(expenseCategory.id, ExpenseCategory.fromContract(expenseCategory)),
     );
 };

@@ -13,7 +13,7 @@
 
     let cssVarStyles: string;
     $: cssVarStyles = Object.keys(styles)
-        .map((key) => `--${key}:${styles[key]}`)
+        .map(key => `--${key}:${styles[key]}`)
         .join(";");
 </script>
 

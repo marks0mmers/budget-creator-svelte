@@ -76,7 +76,7 @@ export default {
                 port: 5000,
                 spa: "public/index.html",
                 proxy: {
-                    "/api/*": ["localhost:8000", { proxyReqPathResolver: (ctx) => ctx.url }],
+                    "/api/*": ["localhost:8000", { proxyReqPathResolver: ctx => ctx.url }],
                 },
             }),
 

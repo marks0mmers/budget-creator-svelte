@@ -6,7 +6,7 @@
     import { derived } from "svelte/store";
 
     const { expenseCategories, selectedCategory } = expenseCategoryStore;
-    const expenseCategoryValues = derived(expenseCategories, (categories) =>
+    const expenseCategoryValues = derived(expenseCategories, categories =>
         [...categories.values()].sort((a, b) => a.name.localeCompare(b.name)),
     );
 

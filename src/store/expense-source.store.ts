@@ -14,7 +14,7 @@ const createExpenseSource = async (
     };
     const res = await http(`/api/budgets/${budgetId}/expenseSource`, "POST", body);
     const budget: BudgetContract = await res.json();
-    budgetStore.budgets.update((budgets) => budgets.set(budget.id, Budget.fromContract(budget)));
+    budgetStore.budgets.update(budgets => budgets.set(budget.id, Budget.fromContract(budget)));
 };
 
 const updateExpenseSource = async (
@@ -32,13 +32,13 @@ const updateExpenseSource = async (
         body,
     );
     const budget: BudgetContract = await res.json();
-    budgetStore.budgets.update((budgets) => budgets.set(budget.id, Budget.fromContract(budget)));
+    budgetStore.budgets.update(budgets => budgets.set(budget.id, Budget.fromContract(budget)));
 };
 
 const deleteExpenseSource = async (budgetId: number, expenseSourceId: number) => {
     const res = await http(`/api/budgets/${budgetId}/expenseSource/${expenseSourceId}`, "DELETE");
     const budget: BudgetContract = await res.json();
-    budgetStore.budgets.update((budgets) => {
+    budgetStore.budgets.update(budgets => {
         budgets.delete(budget.id);
         return budgets;
     });
