@@ -26,7 +26,7 @@
         ? $selectedCategoryId && $selectedCategoryId === category?.id
         : $selectedSubCategoryId && $selectedSubCategoryId === category?.id);
 
-    async function handleSubmit() {
+    const handleSubmit = async () => {
         isEditing = false;
         if (name !== "") {
             if (category) {
@@ -60,9 +60,9 @@
                 }
             }
         }
-    }
+    };
 
-    async function deleteCategory() {
+    const deleteCategory = async () => {
         if (category) {
             switch (mode) {
                 case "category":
@@ -78,7 +78,7 @@
                     break;
             }
         }
-    }
+    };
 
     function handleClick(e: MouseEvent) {
         if (e.ctrlKey && isSelected) {

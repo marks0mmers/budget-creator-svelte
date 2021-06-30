@@ -10,7 +10,7 @@ import css from "rollup-plugin-css-only";
 
 const production = !process.env.ROLLUP_WATCH;
 
-function typeCheck() {
+const typeCheck = () => {
     return {
         writeBundle() {
             require("child_process").spawn("svelte-check", {
@@ -19,9 +19,9 @@ function typeCheck() {
             });
         },
     };
-}
+};
 
-function prettier() {
+const prettier = () => {
     return {
         writeBundle() {
             require("child_process").spawn("prettier -c ./src", {
@@ -30,7 +30,7 @@ function prettier() {
             });
         },
     };
-}
+};
 
 export default {
     input: "src/main.ts",

@@ -4,6 +4,7 @@
     import { expenseCategoryStore } from "../../../store/expense-category.store";
     import type { ExpenseSubCategory } from "../../../models/expense-sub-category";
     import { derived } from "svelte/store";
+    import { slide } from "svelte/transition";
 
     const { expenseCategories, selectedCategory } = expenseCategoryStore;
     const expenseCategoryValues = derived(expenseCategories, categories =>
@@ -29,7 +30,7 @@
         <CategoryView />
     </div>
     {#if $selectedCategory}
-        <div class="sub-categories-row">
+        <div class="sub-categories-row" transition:slide>
             <h4 class="categories-title">Sub-Categories:</h4>
             {#each expenseSubCategoryValues as expenseSubCategory}
                 <CategoryView mode="sub-category" category="{expenseSubCategory}" />

@@ -3,6 +3,7 @@
     import { budgetStore } from "../../../store/budget.store";
     import { userStore } from "../../../store/user.store";
     import { useLocation, useNavigate } from "svelte-navigator";
+    import Select from "../input/Select.svelte";
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -10,11 +11,11 @@
     const { budgets, selectedBudgetId } = budgetStore;
     const { currentUser } = userStore;
 
-    function logIn() {
+    const logIn = () => {
         navigate("/login");
-    }
+    };
 
-    function logOut() {}
+    const logOut = () => {};
 
     $: if ($currentUser) {
         budgetStore.getBudgets();
@@ -24,12 +25,12 @@
 {#if $location.pathname !== "/login"}
     <header class="header">
         <h1 class="header-title">Budget Creator</h1>
-        <select name="selected-budget" bind:value="{$selectedBudgetId}">
+        <Select id="selected-budget" bind:value="{$selectedBudgetId}" width="{150}">
             <option value="{undefined}">Select a Budget</option>
             {#each [...$budgets] as [key, budget]}
                 <option value="{key}">{budget.title}</option>
             {/each}
-        </select>
+        </Select>
         <div id="header-buttons" class="buttons-container"></div>
         <span class="username">{$currentUser?.fullName || "Please Log In"}</span>
         <Button

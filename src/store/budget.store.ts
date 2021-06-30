@@ -3,22 +3,25 @@ import { derived, writable } from "svelte/store";
 import { http } from "../util/fetch-utils";
 
 const budgets = writable(new Map<number, Budget>());
-const selectedBudgetId = writable<number | undefined>(
-    Number(localStorage.getItem("selectedBudget")) || undefined,
-);
+const selectedBudgetId = writable<number | undefined>(0);
 
 const selectedBudget = derived([budgets, selectedBudgetId], ([$budgets, $selectedBudgetId]) =>
     $selectedBudgetId ? $budgets.get($selectedBudgetId) : undefined,
 );
 
-selectedBudgetId.subscribe(budgetId =>
-    localStorage.setItem("selectedBudget", budgetId?.toString() ?? ""),
-);
+selectedBudgetId.subscribe(budgetId => {
+    if (budgetId === undefined) {
+        localStorage.removeItem("selectedBudget");
+    } else if (budgetId > 0) {
+        localStorage.setItem("selectedBudget", budgetId?.toString() ?? "");
+    }
+});
 
 const getBudgets = async () => {
     const res = await http("/api/budgets");
     const budgetContracts: BudgetContract[] = await res.json();
     budgets.set(new Map(budgetContracts.map(Budget.fromContract).map(b => [b.id, b])));
+    selectedBudgetId.set(Number(localStorage.getItem("selectedBudget")) || 0);
 };
 
 const createBudget = async (budgetContract: CreateBudgetContract) => {
@@ -30,7 +33,7 @@ const createBudget = async (budgetContract: CreateBudgetContract) => {
 const deleteBudget = async (budgetId: number) => {
     const res = await http(`/api/budgets/${budgetId}`, "DELETE");
     const budget: BudgetContract = await res.json();
-    selectedBudgetId.set(undefined);
+    selectedBudgetId.set(0);
     budgets.update(oldBudgets => {
         oldBudgets.delete(budget.id);
         return oldBudgets;

@@ -44,7 +44,7 @@
         });
     }
 
-    async function incomeSourceSubmit() {
+    const incomeSourceSubmit = async () => {
         const isValid = await incomeSourceSchema.isValid($incomeSourceForm);
         if (isValid) {
             if (incomeSourceId) {
@@ -58,11 +58,11 @@
             }
             hideForm();
         }
-    }
+    };
 
-    function hideForm() {
+    const hideForm = () => {
         dispatch("hideForm");
-    }
+    };
 </script>
 
 <form class="income-source-form" on:submit|preventDefault="{incomeSourceSubmit}">

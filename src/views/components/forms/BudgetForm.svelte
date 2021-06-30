@@ -35,7 +35,7 @@
         });
     }
 
-    async function budgetFormSubmit() {
+    const budgetFormSubmit = async () => {
         submitted = true;
 
         const isValid = await budgetSchema.isValid($budgetForm);
@@ -43,7 +43,7 @@
             dispatch("exitModal");
             await budgetStore.createBudget($budgetForm);
         }
-    }
+    };
 </script>
 
 <form class="budget-form" on:submit|preventDefault="{budgetFormSubmit}">

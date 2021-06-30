@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ExpenseSourceTree } from "../../models/expense-source-tree";
+    import type { ExpenseSourceTree } from "../models/expense-source-tree";
     import { expenseCategoryStore } from "../../store/expense-category.store";
     import ExpenseSourceView from "./ExpenseSourceView.svelte";
 

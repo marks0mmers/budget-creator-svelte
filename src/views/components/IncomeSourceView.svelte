@@ -11,9 +11,9 @@
     let isEditing = false;
     let isMouseInIncomeSource = false;
 
-    async function deleteClick() {
+    const deleteClick = async () => {
         await incomeSourceStore.deleteIncomeSource(budgetId, incomeSource.id);
-    }
+    };
 </script>
 
 {#if !isEditing}
@@ -54,6 +54,7 @@
 <style lang="scss">
     .income-source-view {
         padding: 10px;
+        height: 20px;
         display: grid;
         grid-template-columns: 1fr auto 20px 20px;
         grid-column-gap: 4px;

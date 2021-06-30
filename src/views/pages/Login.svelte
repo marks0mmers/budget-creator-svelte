@@ -39,7 +39,7 @@
         });
     }
 
-    async function loginSubmit() {
+    const loginSubmit = async () => {
         submitted = true;
 
         const isValid = await loginSchema.isValid($loginForm);
@@ -47,7 +47,7 @@
             await userStore.login($loginForm);
             navigate("/");
         }
-    }
+    };
 </script>
 
 <div id="fill-header"></div>

@@ -63,7 +63,7 @@
     let subCategoryValues: ExpenseSubCategory[];
     $: subCategoryValues = [...subCategories.values()].sort((a, b) => a.name.localeCompare(b.name));
 
-    async function expenseSourceFormSubmit() {
+    const expenseSourceFormSubmit = async () => {
         submitted = true;
         const isValid = await expenseSourceSchema.isValid($expenseSourceForm);
         if (isValid && $selectedBudgetId) {
@@ -78,7 +78,7 @@
                 await expenseSourceStore.createExpenseSource($selectedBudgetId, $expenseSourceForm);
             }
         }
-    }
+    };
 </script>
 
 <form class="expense-source-form" on:submit|preventDefault="{expenseSourceFormSubmit}">

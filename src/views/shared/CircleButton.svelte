@@ -1,5 +1,6 @@
 <script lang="ts">
     import Icon from "./Icon.svelte";
+    import { fade } from "svelte/transition";
 
     export let id: string | undefined;
     export let tooltip = "";
@@ -12,8 +13,6 @@
 
     let styles: { [key: string]: string };
     $: styles = {
-        opacity: `${visible ? 1 : 0}`,
-        transition: `${visible ? "opacity 0.2s" : "opacity 0.2s 0.2s"}`,
         margin: `${marginTopBottom ?? 0}px ${marginLeftRight ?? 0}px`,
         gridArea,
     };
@@ -24,9 +23,18 @@
         .join(";");
 </script>
 
-<button id="{id}" title="{tooltip}" type="{type}" on:click style="{cssVarStyles}">
-    <Icon iconName="{icon}" size="{16}" color="white" />
-</button>
+{#if visible}
+    <button
+        id="{id}"
+        title="{tooltip}"
+        type="{type}"
+        on:click
+        style="{cssVarStyles}"
+        transition:fade
+    >
+        <Icon iconName="{icon}" size="{16}" color="white" />
+    </button>
+{/if}
 
 <style lang="scss">
     button {

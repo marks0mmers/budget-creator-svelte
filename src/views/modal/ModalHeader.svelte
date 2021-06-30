@@ -6,9 +6,9 @@
 
     const dispatch = createEventDispatcher();
 
-    function exitModal() {
+    const exitModal = () => {
         dispatch("exitModal");
-    }
+    };
 </script>
 
 <div id="modal-header-container">

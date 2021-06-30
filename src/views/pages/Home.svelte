@@ -10,19 +10,19 @@
 
     let budgetFormShowing = false;
 
-    function addBudgetClick() {
+    const addBudgetClick = () => {
         budgetFormShowing = true;
-    }
+    };
 
-    function closeBudgetModal() {
+    const closeBudgetModal = () => {
         budgetFormShowing = false;
-    }
+    };
 
-    async function deleteBudget() {
+    const deleteBudget = async () => {
         if ($selectedBudgetId) {
             await budgetStore.deleteBudget($selectedBudgetId);
         }
-    }
+    };
 </script>
 
 <HeaderButton id="add-budget-button" text="Add Budget" icon="add" on:click="{addBudgetClick}" />

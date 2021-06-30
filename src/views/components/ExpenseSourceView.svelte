@@ -24,17 +24,17 @@
         .map(key => `--${key}:${styles[key]}`)
         .join(";");
 
-    function editExpenseSourceClick() {
+    const editExpenseSourceClick = () => {
         isEditing = true;
-    }
+    };
 
-    function closeExpenseSourceModal() {
+    const closeExpenseSourceModal = () => {
         isEditing = false;
-    }
+    };
 
-    async function deleteClick() {
+    const deleteClick = async () => {
         await expenseSourceStore.deleteExpenseSource(budgetId, expenseSource.id);
-    }
+    };
 </script>
 
 <div
@@ -73,6 +73,7 @@
 <style lang="scss">
     .expense-source-view {
         display: grid;
+        height: 20px;
         grid-template-columns: 1fr auto 20px 20px;
         border-bottom: 1px solid #fff0e1;
         grid-column-gap: 4px;

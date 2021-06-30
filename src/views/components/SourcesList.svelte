@@ -8,7 +8,7 @@
     import ModalHeader from "../modal/ModalHeader.svelte";
     import ExpenseSourceForm from "./forms/ExpenseSourceForm.svelte";
     import ExpenseSourcesTree from "./ExpenseSourcesTree.svelte";
-    import { ExpenseSourceTree } from "../../models/expense-source-tree";
+    import { ExpenseSourceTree } from "../models/expense-source-tree";
 
     export let budgetId: number;
     export let incomeSources: Map<number, IncomeSource>;
@@ -35,15 +35,13 @@
         .reduce((total, i) => total + i.amount, 0)
         .toFixed(2);
 
-    function openExpenseSourceModal() {
+    const openExpenseSourceModal = () => {
         expenseFormShowing = true;
-    }
+    };
 
-    function closeExpenseSourceModal() {
+    const closeExpenseSourceModal = () => {
         expenseFormShowing = false;
-    }
-
-    $: console.log(expenseSourceTree);
+    };
 </script>
 
 <section class="sources">

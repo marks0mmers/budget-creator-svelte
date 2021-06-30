@@ -1,4 +1,4 @@
-import type { ExpenseSource } from "./expense-source";
+import type { ExpenseSource } from "../../models/expense-source";
 
 export class ExpenseSourceTree {
     private categoriesToExpenseSources = new Map<string, number[]>();
