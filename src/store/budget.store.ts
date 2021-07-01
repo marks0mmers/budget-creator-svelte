@@ -1,4 +1,4 @@
-import { Budget, BudgetContract, CreateBudgetContract } from "../models/budget";
+import { Budget, BudgetContract, UpsertBudgetContract } from "../models/budget";
 import { derived, writable } from "svelte/store";
 import { http } from "../util/fetch-utils";
 
@@ -24,7 +24,7 @@ const getBudgets = async () => {
     selectedBudgetId.set(Number(localStorage.getItem("selectedBudget")) || 0);
 };
 
-const createBudget = async (budgetContract: CreateBudgetContract) => {
+const createBudget = async (budgetContract: UpsertBudgetContract) => {
     const res = await http("/api/budgets", "POST", budgetContract);
     const budget: BudgetContract = await res.json();
     budgets.update(oldBudgets => oldBudgets.set(budget.id, Budget.fromContract(budget)));

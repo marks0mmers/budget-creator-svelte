@@ -17,7 +17,6 @@
     let mouseInIncomeLabel = false;
     let incomeFormShowing = false;
     let expenseFormShowing = false;
-
     let mouseInExpenseLabel = false;
 
     let incomeSourceValues: IncomeSource[];

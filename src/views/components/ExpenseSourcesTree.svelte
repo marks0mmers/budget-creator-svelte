@@ -50,15 +50,13 @@
                     {/each}
                 {/if}
             {/each}
-            {#if !expenseSourceTree.getSources(expenseCategory.id)}
-                {#each expenseSourceTree.getSources(expenseCategory.id) ?? [] as expenseSource, idx}
-                    <ExpenseSourceView
-                        index="{idx}"
-                        budgetId="{budgetId}"
-                        expenseSource="{expenseSource}"
-                    />
-                {/each}
-            {/if}
+            {#each expenseSourceTree.getSources(expenseCategory.id) ?? [] as expenseSource, idx}
+                <ExpenseSourceView
+                    index="{idx}"
+                    budgetId="{budgetId}"
+                    expenseSource="{expenseSource}"
+                />
+            {/each}
         {/if}
     {/each}
 </div>

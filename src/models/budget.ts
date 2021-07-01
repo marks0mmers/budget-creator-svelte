@@ -9,11 +9,7 @@ export interface BudgetContract {
     expenseSources: ExpenseSourceContract[];
 }
 
-export type CreateBudgetContract = Pick<BudgetContract, "title">;
-
-export interface UpdateBudgetContract extends CreateBudgetContract {
-    id: number;
-}
+export type UpsertBudgetContract = Pick<BudgetContract, "title">;
 
 interface BudgetRecordContract extends Omit<BudgetContract, "incomeSources" | "expenseSources"> {
     incomeSources: Map<number, IncomeSource>;

@@ -1,9 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import { derived, writable } from "svelte/store";
-    import type { UpsertExpenseSourceContract } from "../../../models/expense-source";
+    import { derived } from "svelte/store";
     import { number, object, string } from "yup";
-    import { buildErrors } from "../../../util/form-utils";
     import Label from "../../shared/input/Label.svelte";
     import Required from "../../shared/input/Required.svelte";
     import Input from "../../shared/input/Input.svelte";
@@ -16,6 +14,7 @@
     import type { ExpenseSource } from "../../../models/expense-source";
     import { expenseSourceStore } from "../../../store/expense-source.store";
     import { budgetStore } from "../../../store/budget.store";
+    import { useForm } from "./use-form";
 
     const { selectedBudgetId } = budgetStore;
     const { expenseCategories } = expenseCategoryStore;
@@ -27,32 +26,25 @@
 
     export let initialValues: ExpenseSource | undefined = undefined;
 
-    let submitted = false;
-    let errors = new Map<string, string>();
-
-    const expenseSourceForm = writable<UpsertExpenseSourceContract>({
-        name: initialValues?.name ?? "",
-        amount: initialValues?.amount ?? 0,
-        categoryId: initialValues?.category?.id ?? 0,
-        subCategoryId: initialValues?.subCategory?.id ?? undefined,
-    });
-
-    expenseSourceForm.subscribe(() => {
-        submitted = false;
-        errors = new Map<string, string>();
-    });
-
     const expenseSourceSchema = object().shape({
         name: string().required("Name is required"),
         amount: number().required("Amount is required").min(1, "Amount must be positive"),
         categoryId: number().required("Category is required"),
     });
 
-    $: if (submitted) {
-        expenseSourceSchema.validate($expenseSourceForm, { abortEarly: false }).catch(err => {
-            errors = buildErrors(errors, err);
-        });
-    }
+    const {
+        errors,
+        form: expenseSourceForm,
+        onSubmit,
+    } = useForm(
+        {
+            name: initialValues?.name ?? "",
+            amount: initialValues?.amount ?? 0,
+            categoryId: initialValues?.category?.id ?? 0,
+            subCategoryId: initialValues?.subCategory?.id ?? undefined,
+        },
+        expenseSourceSchema,
+    );
 
     let subCategories: Map<number, ExpenseSubCategory>;
     $: subCategories =
@@ -64,9 +56,7 @@
     $: subCategoryValues = [...subCategories.values()].sort((a, b) => a.name.localeCompare(b.name));
 
     const expenseSourceFormSubmit = async () => {
-        submitted = true;
-        const isValid = await expenseSourceSchema.isValid($expenseSourceForm);
-        if (isValid && $selectedBudgetId) {
+        if ($selectedBudgetId) {
             dispatch("exitModal");
             if (initialValues) {
                 await expenseSourceStore.updateExpenseSource(
@@ -81,18 +71,18 @@
     };
 </script>
 
-<form class="expense-source-form" on:submit|preventDefault="{expenseSourceFormSubmit}">
+<form class="expense-source-form" on:submit|preventDefault="{onSubmit(expenseSourceFormSubmit)}">
     <Label forValue="name" gridArea="name">
         Name
         <Required />
         <Input id="name" bind:value="{$expenseSourceForm.name}" />
-        <Error>{errors.has("name") ? errors.get("name") : ""}</Error>
+        <Error>{$errors.has("name") ? $errors.get("name") : ""}</Error>
     </Label>
     <Label forValue="amount" gridArea="amount">
         Amount
         <Required />
         <Number id="amount" bind:value="{$expenseSourceForm.amount}" />
-        <Error>{errors.has("amount") ? errors.get("amount") : ""}</Error>
+        <Error>{$errors.has("amount") ? $errors.get("amount") : ""}</Error>
     </Label>
     <Label forValue="categoryId" gridArea="category">
         Category
@@ -103,7 +93,7 @@
                 <option value="{expenseCategory.id}">{expenseCategory.name}</option>
             {/each}
         </Select>
-        <Error>{errors.has("categoryId") ? errors.get("categoryId") : ""}</Error>
+        <Error>{$errors.has("categoryId") ? $errors.get("categoryId") : ""}</Error>
     </Label>
     <Label forValue="subCategoryId" gridArea="sub-category">
         Sub-Category
@@ -113,7 +103,7 @@
                 <option value="{expenseSubCategory.id}">{expenseSubCategory.name}</option>
             {/each}
         </Select>
-        <Error>{errors.has("subCategoryId") ? errors.get("subCategoryId") : ""}</Error>
+        <Error>{$errors.has("subCategoryId") ? $errors.get("subCategoryId") : ""}</Error>
     </Label>
     <Button
         id="expense-source-form-submit"
@@ -128,7 +118,8 @@
     .expense-source-form {
         width: 600px;
         display: grid;
-        grid-row-gap: 10px;
+        row-gap: 10px;
+        column-gap: 10px;
         grid-template-columns: repeat(4, 1fr);
         grid-template-areas:
             "name name name amount"

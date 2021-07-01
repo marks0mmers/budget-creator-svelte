@@ -2,7 +2,7 @@
     import { budgetStore } from "../../store/budget.store";
     import Categories from "./categories/Categories.svelte";
     import SourcesList from "./SourcesList.svelte";
-    import AgGridSvelte from "../shared/AgGridSvelte.svelte";
+    import ItemsList from "./ItemsList.svelte";
 
     const { selectedBudget } = budgetStore;
 </script>
@@ -15,20 +15,7 @@
             expenseSources="{$selectedBudget.expenseSources}"
         />
         <Categories />
-        <AgGridSvelte
-            gridArea="items"
-            data="{[]}"
-            columnDefs="{[
-                {
-                    field: 'name',
-                    headerName: 'Name',
-                },
-                {
-                    field: 'amount',
-                    headerName: 'Amount ($)',
-                },
-            ]}"
-        />
+        <ItemsList />
     {/if}
 </main>
 

@@ -1,9 +1,7 @@
 <script lang="ts">
     import type { UpsertIncomeSourceContract } from "../../../models/income-source";
     import { createEventDispatcher } from "svelte";
-    import { writable } from "svelte/store";
     import { number, object, string } from "yup";
-    import { buildErrors } from "../../../util/form-utils";
     import { fail } from "../../../util/toast-utils";
     import CircleButton from "../../shared/CircleButton.svelte";
     import Label from "../../shared/input/Label.svelte";
@@ -12,6 +10,7 @@
     import Number from "../../shared/input/Number.svelte";
     import Button from "../../shared/Button.svelte";
     import { incomeSourceStore } from "../../../store/income-source.store";
+    import { useForm } from "./use-form";
 
     export let budgetId: number;
     export let incomeSourceId = 0;
@@ -19,45 +18,38 @@
 
     const dispatch = createEventDispatcher();
 
-    let submitted = false;
-
-    const incomeSourceForm = writable<UpsertIncomeSourceContract>(
-        initialValues || {
-            name: "",
-            amount: 0,
-        },
-    );
-
-    incomeSourceForm.subscribe(() => {
-        submitted = false;
-    });
-
     const incomeSourceSchema = object().shape({
         name: string().required("Name is required"),
         amount: number().required("Amount is required").min(1, "Amount must be positive"),
     });
 
-    $: if (submitted) {
-        incomeSourceSchema.validate($incomeSourceForm, { abortEarly: false }).catch(err => {
-            const errors = buildErrors(new Map<string, string>(), err);
-            errors.forEach(error => fail(error));
-        });
-    }
+    const {
+        errors,
+        form: incomeSourceForm,
+        onSubmit,
+    } = useForm(
+        {
+            name: initialValues?.name ?? "",
+            amount: initialValues?.amount ?? 0,
+        },
+        incomeSourceSchema,
+    );
+
+    errors.subscribe(e => {
+        if (e.size > 0) {
+            for (let err of e.values()) {
+                fail(err);
+            }
+        }
+    });
 
     const incomeSourceSubmit = async () => {
-        const isValid = await incomeSourceSchema.isValid($incomeSourceForm);
-        if (isValid) {
-            if (incomeSourceId) {
-                await incomeSourceStore.updateIncomeSource(
-                    budgetId,
-                    incomeSourceId,
-                    $incomeSourceForm,
-                );
-            } else {
-                await incomeSourceStore.createIncomeSource(budgetId, $incomeSourceForm);
-            }
-            hideForm();
+        if (incomeSourceId) {
+            await incomeSourceStore.updateIncomeSource(budgetId, incomeSourceId, $incomeSourceForm);
+        } else {
+            await incomeSourceStore.createIncomeSource(budgetId, $incomeSourceForm);
         }
+        hideForm();
     };
 
     const hideForm = () => {
@@ -65,7 +57,7 @@
     };
 </script>
 
-<form class="income-source-form" on:submit|preventDefault="{incomeSourceSubmit}">
+<form class="income-source-form" on:submit|preventDefault="{onSubmit(incomeSourceSubmit)}">
     <CircleButton
         id="cancel-edit"
         icon="clear"

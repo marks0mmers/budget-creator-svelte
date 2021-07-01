@@ -3,6 +3,14 @@ import { http } from "../util/fetch-utils";
 import type { BudgetContract } from "../models/budget";
 import { budgetStore } from "./budget.store";
 import { Budget } from "../models/budget";
+import { derived, writable } from "svelte/store";
+
+const selectedIncomeSourceId = writable<number | undefined>(undefined);
+const selectedIncomeSource = derived(
+    [selectedIncomeSourceId, budgetStore.selectedBudget],
+    ([$selectedIncomeSourceId, $budget]) =>
+        $selectedIncomeSourceId ? $budget?.incomeSources.get($selectedIncomeSourceId) : undefined,
+);
 
 const createIncomeSource = async (
     budgetId: number,
@@ -34,6 +42,8 @@ const deleteIncomeSource = async (budgetId: number, incomeSourceId: number) => {
 };
 
 export const incomeSourceStore = {
+    selectedIncomeSourceId,
+    selectedIncomeSource,
     createIncomeSource,
     updateIncomeSource,
     deleteIncomeSource,

@@ -16,6 +16,7 @@
         "@types/yup": "^0.29.11",
         "@zerodevx/svelte-toast": "^0.3.0",
         "ag-grid-community": "^25.3.0",
+        "moment": "^2.29.1",
         "prettier": "^2.3.1",
         "prettier-plugin-svelte": "^2.3.0",
         "rollup": "^2.52.1",

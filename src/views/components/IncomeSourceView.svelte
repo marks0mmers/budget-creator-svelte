@@ -8,8 +8,26 @@
     export let budgetId: number;
     export let incomeSource: IncomeSource;
 
+    const { selectedIncomeSourceId } = incomeSourceStore;
+
     let isEditing = false;
     let isMouseInIncomeSource = false;
+
+    let background: string;
+    $: background =
+        $selectedIncomeSourceId === incomeSource.id
+            ? "#ccedff"
+            : index % 2 === 1
+            ? "rgb(245, 245, 245)"
+            : "white";
+
+    const handleClick = (e: MouseEvent) => {
+        if (e.ctrlKey) {
+            selectedIncomeSourceId.set(undefined);
+        } else {
+            selectedIncomeSourceId.set(incomeSource.id);
+        }
+    };
 
     const deleteClick = async () => {
         await incomeSourceStore.deleteIncomeSource(budgetId, incomeSource.id);
@@ -20,7 +38,8 @@
     <div
         id="income-source-{incomeSource.id}"
         class="income-source-view"
-        style="background: {index % 2 === 1 ? 'rgb(245, 245, 245)' : 'white'}"
+        style="background: {background}"
+        on:click="{handleClick}"
         on:mouseenter="{() => (isMouseInIncomeSource = true)}"
         on:mouseleave="{() => (isMouseInIncomeSource = false)}"
     >
