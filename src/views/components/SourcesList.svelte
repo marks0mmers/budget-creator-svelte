@@ -24,7 +24,8 @@
         a.name.localeCompare(b.name),
     );
 
-    let expenseSourceTree = new ExpenseSourceTree(expenseSources);
+    let expenseSourceTree: ExpenseSourceTree;
+    $: expenseSourceTree = new ExpenseSourceTree(expenseSources);
 
     let incomeTotals: string;
     $: incomeTotals = incomeSourceValues.reduce((total, i) => total + i.amount, 0).toFixed(2);

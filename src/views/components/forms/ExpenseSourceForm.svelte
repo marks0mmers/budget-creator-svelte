@@ -26,7 +26,7 @@
 
     export let initialValues: ExpenseSource | undefined = undefined;
 
-    const expenseSourceSchema = object().shape({
+    const expenseSourceSchema = object({
         name: string().required("Name is required"),
         amount: number().required("Amount is required").min(1, "Amount must be positive"),
         categoryId: number().required("Category is required"),

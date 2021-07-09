@@ -1,5 +1,4 @@
 import { get, writable } from "svelte/store";
-import type { SchemaOf } from "yup";
 import type { ValidationError } from "yup";
 
 const buildErrors = (errors: Map<string, string>, err: ValidationError) => {
@@ -12,7 +11,7 @@ const buildErrors = (errors: Map<string, string>, err: ValidationError) => {
     return newErrors;
 };
 
-export const useForm = <T>(initialValues: T, schema: SchemaOf<unknown>) => {
+export const useForm = <T>(initialValues: T, schema: any) => {
     let submitted = writable(false);
     let errors = writable(new Map<string, string>());
 
@@ -25,7 +24,7 @@ export const useForm = <T>(initialValues: T, schema: SchemaOf<unknown>) => {
 
     submitted.subscribe(s => {
         if (s) {
-            schema.validate(get(form), { abortEarly: false }).catch(err => {
+            schema.validate(get(form), { abortEarly: false }).catch((err: ValidationError) => {
                 errors.set(buildErrors(get(errors), err));
             });
         }

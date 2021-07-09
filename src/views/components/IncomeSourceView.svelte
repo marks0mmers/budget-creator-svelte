@@ -3,12 +3,14 @@
     import IncomeSourceForm from "./forms/IncomeSourceForm.svelte";
     import CircleButton from "../shared/CircleButton.svelte";
     import { incomeSourceStore } from "../../store/income-source.store";
+    import { expenseSourceStore } from "../../store/expense-source.store";
 
     export let index: number;
     export let budgetId: number;
     export let incomeSource: IncomeSource;
 
     const { selectedIncomeSourceId } = incomeSourceStore;
+    const { selectedExpenseSourceId } = expenseSourceStore;
 
     let isEditing = false;
     let isMouseInIncomeSource = false;
@@ -24,8 +26,10 @@
     const handleClick = (e: MouseEvent) => {
         if (e.ctrlKey) {
             selectedIncomeSourceId.set(undefined);
+            selectedExpenseSourceId.set(undefined);
         } else {
             selectedIncomeSourceId.set(incomeSource.id);
+            selectedExpenseSourceId.set(undefined);
         }
     };
 

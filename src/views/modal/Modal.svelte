@@ -7,19 +7,20 @@
 
     const modalBox = document.getElementById("modal-box");
 
+    const onOutsideClick = (e: any) => {
+        if (e.target.className.includes("modal")) {
+            dispatch("exitModal");
+        }
+    };
+
     onMount(() => {
         if (ref) {
             modalBox?.appendChild(ref);
-            ref.addEventListener("click", (el: any) => {
-                if (el.target.className.includes("modal")) {
-                    dispatch("exitModal");
-                }
-            });
         }
     });
 </script>
 
-<div id="host" bind:this="{ref}">
+<div id="host" bind:this="{ref}" on:click="{onOutsideClick}">
     <div class="modal">
         <div class="body">
             <slot />

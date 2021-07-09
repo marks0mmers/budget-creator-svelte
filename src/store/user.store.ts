@@ -6,8 +6,10 @@ const currentUser = writable<User | undefined>(undefined);
 
 const getCurrentUser = async () => {
     const res = await http("/api/users/current");
-    const user: UserContract = await res.json();
-    currentUser.set(User.fromContract(user));
+    if (res.status === 200) {
+        const user: UserContract = await res.json();
+        currentUser.set(User.fromContract(user));
+    }
 };
 
 const login = async (contract: LoginContract) => {
@@ -17,8 +19,13 @@ const login = async (contract: LoginContract) => {
     currentUser.set(User.fromContract(user));
 };
 
+const logout = () => {
+    window.localStorage.removeItem("jwtToken");
+};
+
 export const userStore = {
     currentUser,
     getCurrentUser,
     login,
+    logout,
 };

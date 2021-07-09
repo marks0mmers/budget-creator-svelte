@@ -5,7 +5,13 @@
     import ItemsList from "./ItemsList.svelte";
 
     const { selectedBudget } = budgetStore;
+
+    $: title = $selectedBudget?.title ?? "Budget Creator";
 </script>
+
+<svelte:head>
+    <title>{title}</title>
+</svelte:head>
 
 <main class="budget-dashboard">
     {#if $selectedBudget}

@@ -18,7 +18,7 @@
 
     const dispatch = createEventDispatcher();
 
-    const incomeSourceSchema = object().shape({
+    const incomeSourceSchema = object({
         name: string().required("Name is required"),
         amount: number().required("Amount is required").min(1, "Amount must be positive"),
     });

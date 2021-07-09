@@ -5,17 +5,26 @@
     import Modal from "../modal/Modal.svelte";
     import ModalHeader from "../modal/ModalHeader.svelte";
     import ExpenseSourceForm from "./forms/ExpenseSourceForm.svelte";
+    import { incomeSourceStore } from "../../store/income-source.store";
 
     export let index: number;
     export let budgetId: number;
     export let expenseSource: ExpenseSource;
 
-    let isMouseInExpenseSource = false;
+    const { selectedIncomeSourceId } = incomeSourceStore;
+    const { selectedExpenseSourceId } = expenseSourceStore;
+
     let isEditing = false;
+    let isMouseInExpenseSource = false;
 
     let styles: { [key: string]: string };
     $: styles = {
-        background: index % 2 === 1 ? "rgb(245, 245, 245)" : "white",
+        background:
+            $selectedExpenseSourceId === expenseSource.id
+                ? "#ccedff"
+                : index % 2 === 1
+                ? "rgb(245, 245, 245)"
+                : "white",
         padding: expenseSource.subCategory ? "60px" : "40px",
     };
 
@@ -23,6 +32,16 @@
     $: cssVarStyles = Object.keys(styles)
         .map(key => `--${key}:${styles[key]}`)
         .join(";");
+
+    const handleClick = (e: MouseEvent) => {
+        if (e.ctrlKey) {
+            selectedExpenseSourceId.set(undefined);
+            selectedIncomeSourceId.set(undefined);
+        } else {
+            selectedExpenseSourceId.set(expenseSource.id);
+            selectedIncomeSourceId.set(undefined);
+        }
+    };
 
     const editExpenseSourceClick = () => {
         isEditing = true;
@@ -41,11 +60,12 @@
     id="expense-source-{expenseSource.id}"
     class="expense-source-view"
     style="{cssVarStyles}"
+    on:click="{handleClick}"
     on:mouseenter="{() => (isMouseInExpenseSource = true)}"
     on:mouseleave="{() => (isMouseInExpenseSource = false)}"
 >
     <span>{expenseSource.name}</span>
-    <span class="green">${expenseSource.amount.toFixed(2)}</span>
+    <span class="red">${expenseSource.amount.toFixed(2)}</span>
     <CircleButton
         id="edit-expense-source"
         icon="edit"
@@ -80,7 +100,7 @@
         background: var(--background);
         padding: 10px 10px 10px var(--padding);
 
-        .green {
+        .red {
             font-weight: bold;
             color: rgb(196, 32, 32);
         }

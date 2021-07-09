@@ -11,9 +11,9 @@
 
     const dispatch = createEventDispatcher();
 
-    const budgetSchema = object().shape({
-        title: string().required("Title is required"),
-    });
+    const budgetSchema = object({
+        title: string().required("Title is required").defined(),
+    }).defined();
 
     const { errors, form: budgetForm, onSubmit } = useForm({ title: "" }, budgetSchema);
 

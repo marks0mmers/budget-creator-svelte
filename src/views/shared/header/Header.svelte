@@ -15,7 +15,10 @@
         navigate("/login");
     };
 
-    const logOut = () => {};
+    const logOut = () => {
+        userStore.logout();
+        navigate("/login");
+    };
 
     $: if ($currentUser) {
         budgetStore.getBudgets();

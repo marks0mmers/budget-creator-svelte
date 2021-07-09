@@ -4,8 +4,8 @@ import { http } from "../util/fetch-utils";
 
 const incomeItems = writable(new Map<number, IncomeItem>());
 
-const getIncomeItems = async () => {
-    const res = await http("/api/incomeItems");
+const getIncomeItems = async (budgetId: number) => {
+    const res = await http(`/api/incomeItems?budgetId=${budgetId}`);
     const incomeItemContracts: IncomeItemContract[] = await res.json();
     incomeItems.set(new Map(incomeItemContracts.map(IncomeItem.fromContract).map(i => [i.id, i])));
 };

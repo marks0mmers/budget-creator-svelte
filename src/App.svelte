@@ -2,18 +2,12 @@
     import { Router, Route } from "svelte-navigator";
     import { SvelteToast } from "@zerodevx/svelte-toast";
     import Home from "./views/pages/Home.svelte";
-    import { userStore } from "./store/user.store";
     import { loadingStore } from "./store/loading.store";
-    import { onMount } from "svelte";
     import Header from "./views/shared/header/Header.svelte";
     import Login from "./views/pages/Login.svelte";
     import LoadingMask from "./views/shared/loading-mask/LoadingMask.svelte";
 
     const { shouldShow: shouldShowLoadingMask } = loadingStore;
-
-    onMount(async () => {
-        await userStore.getCurrentUser();
-    });
 </script>
 
 {#if $shouldShowLoadingMask}

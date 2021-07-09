@@ -13,7 +13,7 @@
 
     const navigate = useNavigate();
 
-    const loginSchema = object().shape({
+    const loginSchema = object({
         username: string().required("Username is required"),
         password: string().required("Password is required"),
     });
@@ -35,6 +35,10 @@
         navigate("/");
     };
 </script>
+
+<svelte:head>
+    <title>Login to Budget Creator</title>
+</svelte:head>
 
 <div id="fill-header"></div>
 <main class="login-page">

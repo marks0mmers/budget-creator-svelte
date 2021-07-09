@@ -5,7 +5,13 @@
     import ModalHeader from "../modal/ModalHeader.svelte";
     import BudgetForm from "../components/forms/BudgetForm.svelte";
     import BudgetDashboard from "../components/BudgetDashboard.svelte";
+    import { onMount } from "svelte";
+    import { userStore } from "../../store/user.store";
+    import { useNavigate } from "svelte-navigator";
 
+    const navigate = useNavigate();
+
+    const { currentUser } = userStore;
     const { selectedBudgetId } = budgetStore;
 
     let budgetFormShowing = false;
@@ -23,6 +29,13 @@
             await budgetStore.deleteBudget($selectedBudgetId);
         }
     };
+
+    onMount(async () => {
+        await userStore.getCurrentUser();
+        if (!$currentUser) {
+            navigate("/login");
+        }
+    });
 </script>
 
 <HeaderButton id="add-budget-button" text="Add Budget" icon="add" on:click="{addBudgetClick}" />

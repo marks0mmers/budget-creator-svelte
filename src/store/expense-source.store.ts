@@ -3,6 +3,9 @@ import { http } from "../util/fetch-utils";
 import type { BudgetContract } from "../models/budget";
 import { budgetStore } from "./budget.store";
 import { Budget } from "../models/budget";
+import { writable } from "svelte/store";
+
+const selectedExpenseSourceId = writable<number | undefined>(undefined);
 
 const createExpenseSource = async (
     budgetId: number,
@@ -42,6 +45,7 @@ const deleteExpenseSource = async (budgetId: number, expenseSourceId: number) =>
 };
 
 export const expenseSourceStore = {
+    selectedExpenseSourceId,
     createExpenseSource,
     updateExpenseSource,
     deleteExpenseSource,
