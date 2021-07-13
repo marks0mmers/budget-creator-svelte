@@ -3,9 +3,16 @@ import { http } from "../util/fetch-utils";
 import type { ExpenseCategoryContract } from "../models/expense-category";
 import { expenseCategoryStore } from "./expense-category.store";
 import { ExpenseCategory } from "../models/expense-category";
-import { writable } from "svelte/store";
+import { derived, writable } from "svelte/store";
 
 const selectedSubCategoryId = writable<number | undefined>(undefined);
+const selectedSubCategory = derived(
+    [expenseCategoryStore.selectedCategory, selectedSubCategoryId],
+    ([$selectedCategory, $selectedSubCategoryId]) =>
+        $selectedSubCategoryId
+            ? $selectedCategory?.subCategories?.get($selectedSubCategoryId)
+            : undefined,
+);
 
 const createExpenseSubCategory = async (
     categoryId: number,
@@ -51,6 +58,7 @@ const deleteExpenseSubCategory = async (categoryId: number, subCategoryId: numbe
 
 export const expenseSubCategoryStore = {
     selectedSubCategoryId,
+    selectedSubCategory,
     createExpenseSubCategory,
     updateExpenseSubCategory,
     deleteExpenseSubCategory,

@@ -20,7 +20,7 @@
 
     const incomeSourceSchema = object({
         name: string().required("Name is required"),
-        amount: number().required("Amount is required").min(1, "Amount must be positive"),
+        amount: number().required("Amount is required").min(0.01, "Amount must be positive"),
     });
 
     const {

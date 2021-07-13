@@ -32,6 +32,7 @@
     export let icon = "";
     export let width = 0;
     export let height = 40;
+    export let noIconMargin = false;
     export let marginTopBottom = 0;
     export let marginLeftRight = 0;
     export let gridArea = "";
@@ -55,7 +56,7 @@
 
 <button id="{id}" title="{tooltip}" type="{type}" on:click style="{cssVarStyles}">
     {#if icon}
-        <Icon iconName="{icon}" margin="{5}" />
+        <Icon iconName="{icon}" margin="{noIconMargin ? 0 : 5}" />
     {/if}
     {text}
 </button>

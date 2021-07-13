@@ -1,8 +1,8 @@
 <script lang="ts">
     import CategoryView from "./CategoryView.svelte";
     import { onMount } from "svelte";
-    import { expenseCategoryStore } from "../../../store/expense-category.store";
-    import type { ExpenseSubCategory } from "../../../models/expense-sub-category";
+    import { expenseCategoryStore } from "../../../../store/expense-category.store";
+    import type { ExpenseSubCategory } from "../../../../models/expense-sub-category";
     import { derived } from "svelte/store";
     import { slide } from "svelte/transition";
 

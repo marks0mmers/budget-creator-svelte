@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { clickOutside } from "../../../actions/click-outside";
-    import type { ExpenseCategory } from "../../../models/expense-category";
-    import type { ExpenseSubCategory } from "../../../models/expense-sub-category";
-    import { expenseCategoryStore } from "../../../store/expense-category.store";
-    import HeaderButton from "../../shared/header/HeaderButton.svelte";
-    import HeaderDivider from "../../shared/header/HeaderDivider.svelte";
-    import { expenseSubCategoryStore } from "../../../store/expense-sub-category.store";
+    import { clickOutside } from "../../../../actions/click-outside";
+    import type { ExpenseCategory } from "../../../../models/expense-category";
+    import type { ExpenseSubCategory } from "../../../../models/expense-sub-category";
+    import { expenseCategoryStore } from "../../../../store/expense-category.store";
+    import HeaderButton from "../../../shared/header/HeaderButton.svelte";
+    import HeaderDivider from "../../../shared/header/HeaderDivider.svelte";
+    import { expenseSubCategoryStore } from "../../../../store/expense-sub-category.store";
 
     export let category: ExpenseCategory | ExpenseSubCategory | undefined = undefined;
     export let mode: "category" | "sub-category" = "category";

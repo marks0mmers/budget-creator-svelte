@@ -4,7 +4,7 @@
     import Modal from "../modal/Modal.svelte";
     import ModalHeader from "../modal/ModalHeader.svelte";
     import BudgetForm from "../components/forms/BudgetForm.svelte";
-    import BudgetDashboard from "../components/BudgetDashboard.svelte";
+    import BudgetDashboard from "../components/dashboard/BudgetDashboard.svelte";
     import { onMount } from "svelte";
     import { userStore } from "../../store/user.store";
     import { useNavigate } from "svelte-navigator";

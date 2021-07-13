@@ -1,21 +1,31 @@
 <script lang="ts">
-    import type { ExpenseSourceTree } from "../models/expense-source-tree";
-    import { expenseCategoryStore } from "../../store/expense-category.store";
+    import type { ExpenseSourceTree } from "../../models/expense-source-tree";
+    import { expenseCategoryStore } from "../../../store/expense-category.store";
     import ExpenseSourceView from "./ExpenseSourceView.svelte";
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher<{ treeUpdate: ExpenseSourceTree }>();
 
     const { expenseCategories } = expenseCategoryStore;
 
     export let budgetId: number;
     export let expenseSourceTree: ExpenseSourceTree;
+
+    const collapseCategory = (categoryId: number) => {
+        dispatch("treeUpdate", expenseSourceTree.toggleCollapsed(categoryId));
+    };
+
+    const collapseSubCategory = (categoryId: number, subCategoryId: number) => {
+        dispatch("treeUpdate", expenseSourceTree.toggleCollapsed(categoryId, subCategoryId));
+    };
 </script>
 
-<div id="expense-sources-container">
+<div class="expense-sources-container">
     {#each [...$expenseCategories.values()] as expenseCategory}
         <div class="expense-category-label">
             <i
                 class="expand-collapse material-icons"
-                on:click="{() =>
-                    (expenseSourceTree = expenseSourceTree.toggleCollapsed(expenseCategory.id))}"
+                on:click="{() => collapseCategory(expenseCategory.id)}"
             >
                 {expenseSourceTree.isCollapsed(expenseCategory.id)
                     ? "chevron_right"
@@ -29,10 +39,7 @@
                     <i
                         class="expand-collapse material-icons"
                         on:click="{() =>
-                            (expenseSourceTree = expenseSourceTree.toggleCollapsed(
-                                expenseCategory.id,
-                                expenseSubCategory.id,
-                            ))}"
+                            collapseSubCategory(expenseCategory.id, expenseSubCategory.id)}"
                     >
                         {expenseSourceTree.isCollapsed(expenseCategory.id, expenseSubCategory.id)
                             ? "chevron_right"
@@ -62,6 +69,10 @@
 </div>
 
 <style lang="scss">
+    .expense-sources-container {
+        overflow-y: auto;
+    }
+
     .expense-category-label,
     .expense-sub-category-label {
         background: #fff4e1;

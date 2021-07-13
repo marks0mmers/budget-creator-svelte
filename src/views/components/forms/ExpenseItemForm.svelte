@@ -16,13 +16,14 @@
 
     const dispatch = createEventDispatcher();
 
+    export let expenseItemId: number | undefined = undefined;
     export let initialValues: UpsertExpenseItemContract | undefined = undefined;
 
     const { selectedExpenseSourceId } = expenseSourceStore;
 
     const expenseItemSchema = object({
         name: string().required("Name is required"),
-        amount: number().required("Amount is required").min(1, "Amount must be positive"),
+        amount: number().required("Amount is required").min(0.01, "Amount must be positive"),
         dateTransacted: object().required("Date Transacted is required"),
     });
 
@@ -40,7 +41,14 @@
     );
 
     const expenseItemSubmit = async () => {
-        if ($selectedExpenseSourceId) {
+        if (expenseItemId && initialValues) {
+            await expenseItemStore.updateExpenseItems(expenseItemId, {
+                name: $expenseItemForm.name,
+                amount: $expenseItemForm.amount,
+                dateTransacted: $expenseItemForm.dateTransacted.format("YYYY-MM-DD"),
+                expenseSourceId: initialValues.expenseSourceId,
+            });
+        } else if ($selectedExpenseSourceId) {
             await expenseItemStore.createExpenseItems({
                 name: $expenseItemForm.name,
                 amount: $expenseItemForm.amount,

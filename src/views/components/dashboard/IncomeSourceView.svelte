@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { IncomeSource } from "../../models/income-source";
-    import IncomeSourceForm from "./forms/IncomeSourceForm.svelte";
-    import CircleButton from "../shared/CircleButton.svelte";
-    import { incomeSourceStore } from "../../store/income-source.store";
-    import { expenseSourceStore } from "../../store/expense-source.store";
+    import type { IncomeSource } from "../../../models/income-source";
+    import IncomeSourceForm from "../forms/IncomeSourceForm.svelte";
+    import CircleButton from "../../shared/CircleButton.svelte";
+    import { incomeSourceStore } from "../../../store/income-source.store";
+    import { expenseSourceStore } from "../../../store/expense-source.store";
 
     export let index: number;
     export let budgetId: number;

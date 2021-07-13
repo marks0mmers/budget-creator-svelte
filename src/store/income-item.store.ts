@@ -10,7 +10,7 @@ const getIncomeItems = async (budgetId: number) => {
     incomeItems.set(new Map(incomeItemContracts.map(IncomeItem.fromContract).map(i => [i.id, i])));
 };
 
-const createIncomeItems = async (incomeItemContract: UpsertIncomeItemContract) => {
+const createIncomeItem = async (incomeItemContract: UpsertIncomeItemContract) => {
     const res = await http("/api/incomeItems", "POST", incomeItemContract);
     const incomeItem: IncomeItemContract = await res.json();
     incomeItems.update(oldIncomeItems =>
@@ -18,7 +18,7 @@ const createIncomeItems = async (incomeItemContract: UpsertIncomeItemContract) =
     );
 };
 
-const updateIncomeItems = async (
+const updateIncomeItem = async (
     incomeItemId: number,
     incomeItemContract: UpsertIncomeItemContract,
 ) => {
@@ -29,7 +29,7 @@ const updateIncomeItems = async (
     );
 };
 
-const deleteIncomeItems = async (incomeItemId: number) => {
+const deleteIncomeItem = async (incomeItemId: number) => {
     const res = await http(`/api/incomeItems/${incomeItemId}`, "DELETE");
     const incomeItem: IncomeItemContract = await res.json();
     incomeItems.update(oldIncomeItems => {
@@ -41,7 +41,7 @@ const deleteIncomeItems = async (incomeItemId: number) => {
 export const incomeItemStore = {
     incomeItems,
     getIncomeItems,
-    createIncomeItems,
-    updateIncomeItems,
-    deleteIncomeItems,
+    createIncomeItem,
+    updateIncomeItem,
+    deleteIncomeItem,
 };

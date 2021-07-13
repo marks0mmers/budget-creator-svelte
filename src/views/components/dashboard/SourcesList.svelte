@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type { IncomeSource } from "../../models/income-source";
-    import type { ExpenseSource } from "../../models/expense-source";
-    import CircleButton from "../shared/CircleButton.svelte";
+    import type { IncomeSource } from "../../../models/income-source";
+    import type { ExpenseSource } from "../../../models/expense-source";
+    import CircleButton from "../../shared/CircleButton.svelte";
     import IncomeSourceView from "./IncomeSourceView.svelte";
-    import IncomeSourceForm from "./forms/IncomeSourceForm.svelte";
-    import Modal from "../modal/Modal.svelte";
-    import ModalHeader from "../modal/ModalHeader.svelte";
-    import ExpenseSourceForm from "./forms/ExpenseSourceForm.svelte";
+    import IncomeSourceForm from "../forms/IncomeSourceForm.svelte";
+    import Modal from "../../modal/Modal.svelte";
+    import ModalHeader from "../../modal/ModalHeader.svelte";
+    import ExpenseSourceForm from "../forms/ExpenseSourceForm.svelte";
     import ExpenseSourcesTree from "./ExpenseSourcesTree.svelte";
-    import { ExpenseSourceTree } from "../models/expense-source-tree";
+    import { ExpenseSourceTree } from "../../models/expense-source-tree";
 
     export let budgetId: number;
     export let incomeSources: Map<number, IncomeSource>;
@@ -27,13 +27,14 @@
     let expenseSourceTree: ExpenseSourceTree;
     $: expenseSourceTree = new ExpenseSourceTree(expenseSources);
 
-    let incomeTotals: string;
-    $: incomeTotals = incomeSourceValues.reduce((total, i) => total + i.amount, 0).toFixed(2);
+    let incomeTotals: number;
+    $: incomeTotals = incomeSourceValues.reduce((total, i) => total + i.amount, 0);
 
-    let expenseTotals: string;
-    $: expenseTotals = [...expenseSources.values()]
-        .reduce((total, i) => total + i.amount, 0)
-        .toFixed(2);
+    let expenseTotals: number;
+    $: expenseTotals = [...expenseSources.values()].reduce((total, i) => total + i.amount, 0);
+
+    let grandTotal: number;
+    $: grandTotal = incomeTotals - expenseTotals;
 
     const openExpenseSourceModal = () => {
         expenseFormShowing = true;
@@ -41,6 +42,10 @@
 
     const closeExpenseSourceModal = () => {
         expenseFormShowing = false;
+    };
+
+    const treeUpdate = (e: CustomEvent<ExpenseSourceTree>) => {
+        expenseSourceTree = e.detail;
     };
 </script>
 
@@ -71,7 +76,7 @@
     </div>
     <footer class="income-total">
         <span>Total</span>
-        <span class="total">${incomeTotals}</span>
+        <span class="total">${incomeTotals.toFixed(2)}</span>
     </footer>
 
     <h3
@@ -99,10 +104,20 @@
             on:click="{openExpenseSourceModal}"
         />
     </h3>
-    <ExpenseSourcesTree budgetId="{budgetId}" bind:expenseSourceTree />
+    <ExpenseSourcesTree
+        budgetId="{budgetId}"
+        expenseSourceTree="{expenseSourceTree}"
+        on:treeUpdate="{treeUpdate}"
+    />
     <footer class="expense-total">
         <span>Total</span>
-        <span class="total">${expenseTotals}</span>
+        <span class="total">${expenseTotals.toFixed(2)}</span>
+    </footer>
+    <footer class="grand-total">
+        <span>Grand Total</span>
+        <span class="total" class:red="{grandTotal < 0}" class:green="{grandTotal > 0}"
+            >${grandTotal.toFixed(2)}</span
+        >
     </footer>
 </section>
 
@@ -140,7 +155,8 @@
         }
 
         .income-total,
-        .expense-total {
+        .expense-total,
+        .grand-total {
             padding: 10px;
             display: grid;
             grid-template-columns: 1fr auto 40px;
@@ -158,6 +174,20 @@
         .expense-total {
             .total {
                 font-weight: bold;
+                color: rgb(196, 32, 32);
+            }
+        }
+
+        .grand-total {
+            .total {
+                font-weight: bold;
+            }
+
+            .green {
+                color: rgb(32, 196, 32);
+            }
+
+            .red {
                 color: rgb(196, 32, 32);
             }
         }

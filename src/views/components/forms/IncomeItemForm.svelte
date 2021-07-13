@@ -16,13 +16,14 @@
 
     const dispatch = createEventDispatcher();
 
+    export let incomeSourceId: number | undefined = undefined;
     export let initialValues: UpsertIncomeItemContract | undefined = undefined;
 
     const { selectedIncomeSourceId } = incomeSourceStore;
 
     const incomeItemSchema = object({
         name: string().required("Name is required"),
-        amount: number().required("Amount is required").min(1, "Amount must be positive"),
+        amount: number().required("Amount is required").min(0.01, "Amount must be positive"),
         dateTransacted: object().required("Date Transacted is required"),
     });
 
@@ -40,8 +41,15 @@
     );
 
     const incomeItemSubmit = async () => {
-        if ($selectedIncomeSourceId) {
-            await incomeItemStore.createIncomeItems({
+        if (incomeSourceId && initialValues) {
+            await incomeItemStore.updateIncomeItem(incomeSourceId, {
+                name: $incomeItemForm.name,
+                amount: $incomeItemForm.amount,
+                dateTransacted: $incomeItemForm.dateTransacted.format("YYYY-MM-DD"),
+                incomeSourceId: initialValues.incomeSourceId,
+            });
+        } else if ($selectedIncomeSourceId) {
+            await incomeItemStore.createIncomeItem({
                 name: $incomeItemForm.name,
                 amount: $incomeItemForm.amount,
                 dateTransacted: $incomeItemForm.dateTransacted.format("YYYY-MM-DD"),

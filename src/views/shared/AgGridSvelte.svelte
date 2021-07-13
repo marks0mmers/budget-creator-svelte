@@ -1,9 +1,22 @@
 <script lang="ts">
-    import { ColDef, Grid, GridApi, GridReadyEvent } from "ag-grid-community";
-    import { onDestroy, onMount } from "svelte";
+    import {
+        ColDef,
+        Grid,
+        GridApi,
+        GridReadyEvent,
+        RowSelectedEvent,
+        SelectionChangedEvent,
+    } from "ag-grid-community";
+    import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
     import "ag-grid-community/dist/styles/ag-grid.css";
     import "ag-grid-community/dist/styles/ag-theme-alpine.css";
     import { CustomTotalRowRenderer } from "../models/custom-total-row-renderer";
+
+    const dispatch = createEventDispatcher<{
+        rowSelected: RowSelectedEvent;
+        selectionChanged: SelectionChangedEvent;
+        gridReady: GridReadyEvent;
+    }>();
 
     export let gridArea: string;
     export let data: unknown[];
@@ -24,6 +37,7 @@
 
     const onGridReady = (e: GridReadyEvent) => {
         api = e.api;
+        dispatch("gridReady", e);
     };
 
     const updateData = (data: unknown[], pinnedBottomRowData: unknown[]) => {
@@ -42,6 +56,15 @@
             floatingFiltersHeight: 40,
             columnDefs,
             pinnedBottomRowData,
+            rowSelection: "single",
+            onSelectionChanged: (e: SelectionChangedEvent) => {
+                dispatch("selectionChanged", e);
+                tick();
+            },
+            onRowSelected: (e: RowSelectedEvent) => {
+                dispatch("rowSelected", e);
+                tick();
+            },
             components: {
                 CustomTotalRowRenderer,
             },

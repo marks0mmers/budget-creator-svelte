@@ -1,11 +1,11 @@
 <script lang="ts">
-    import CircleButton from "../shared/CircleButton.svelte";
-    import type { ExpenseSource } from "../../models/expense-source";
-    import { expenseSourceStore } from "../../store/expense-source.store";
-    import Modal from "../modal/Modal.svelte";
-    import ModalHeader from "../modal/ModalHeader.svelte";
-    import ExpenseSourceForm from "./forms/ExpenseSourceForm.svelte";
-    import { incomeSourceStore } from "../../store/income-source.store";
+    import CircleButton from "../../shared/CircleButton.svelte";
+    import type { ExpenseSource } from "../../../models/expense-source";
+    import { expenseSourceStore } from "../../../store/expense-source.store";
+    import Modal from "../../modal/Modal.svelte";
+    import ModalHeader from "../../modal/ModalHeader.svelte";
+    import ExpenseSourceForm from "../forms/ExpenseSourceForm.svelte";
+    import { incomeSourceStore } from "../../../store/income-source.store";
 
     export let index: number;
     export let budgetId: number;
