@@ -2,6 +2,19 @@
     import Button from "../../shared/Button.svelte";
     import { itemFiltersStore } from "../../../store/item-filters.store";
 
+    export let view: "list" | "chart";
+
+    const toggleView = () => {
+        switch (view) {
+            case "list":
+                view = "chart";
+                break;
+            case "chart":
+                view = "list";
+                break;
+        }
+    };
+
     const { dateFilter } = itemFiltersStore;
 </script>
 
@@ -23,6 +36,13 @@
         noIconMargin
         on:click="{() => itemFiltersStore.addMonthToFilter()}"
     />
+    <div id="spacer"></div>
+    <Button
+        id="toggle-view"
+        text="{view.charAt(0).toUpperCase() + view.slice(1)}"
+        width="{75}"
+        on:click="{toggleView}"
+    />
 </div>
 
 <style lang="scss">
@@ -33,7 +53,7 @@
         padding: 10px;
 
         display: grid;
-        grid-template-columns: 20px 150px 20px;
+        grid-template-columns: 20px 150px 20px 1fr auto;
 
         .date-label {
             font-weight: bold;

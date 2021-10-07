@@ -284,7 +284,7 @@
         background-color: white;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         height: 100%;
-        grid-area: items;
+        grid-area: main;
 
         display: grid;
         grid-template-rows: 1fr;

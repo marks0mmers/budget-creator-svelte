@@ -6,6 +6,10 @@
     import ModalHeader from "../../modal/ModalHeader.svelte";
     import ExpenseSourceForm from "../forms/ExpenseSourceForm.svelte";
     import { incomeSourceStore } from "../../../store/income-source.store";
+    import { expenseItemStore } from "../../../store/expense-item.store";
+    import ProgressIndicator from "../../shared/ProgressIndicator.svelte";
+    import { itemFiltersStore } from "../../../store/item-filters.store";
+    import moment from "moment";
 
     export let index: number;
     export let budgetId: number;
@@ -13,6 +17,8 @@
 
     const { selectedIncomeSourceId } = incomeSourceStore;
     const { selectedExpenseSourceId } = expenseSourceStore;
+    const { dateFilter } = itemFiltersStore;
+    const { expenseItems } = expenseItemStore;
 
     let isEditing = false;
     let isMouseInExpenseSource = false;
@@ -27,6 +33,19 @@
                 : "white",
         padding: expenseSource.subCategory ? "60px" : "40px",
     };
+
+    let percentComplete: number;
+    $: percentComplete =
+        [...$expenseItems.values()]
+            .filter(item => item.expenseSourceName === expenseSource.name)
+            .filter(item => {
+                const dateTransacted = moment(item.dateTransacted);
+                return (
+                    dateTransacted.month() === $dateFilter.month() &&
+                    dateTransacted.year() === $dateFilter.year()
+                );
+            })
+            .reduce((total, item) => total + item.amount, 0.0) / expenseSource.amount;
 
     let cssVarStyles: string;
     $: cssVarStyles = Object.keys(styles)
@@ -65,6 +84,7 @@
     on:mouseleave="{() => (isMouseInExpenseSource = false)}"
 >
     <span>{expenseSource.name}</span>
+    <ProgressIndicator percentComplete="{percentComplete}" />
     <span class="red">${expenseSource.amount.toFixed(2)}</span>
     <CircleButton
         id="edit-expense-source"
@@ -94,15 +114,21 @@
     .expense-source-view {
         display: grid;
         height: 20px;
-        grid-template-columns: 1fr auto 20px 20px;
+        grid-template-columns: 1fr 50px 75px 20px 20px;
         border-bottom: 1px solid #fff0e1;
         grid-column-gap: 4px;
         background: var(--background);
         padding: 10px 10px 10px var(--padding);
 
+        span {
+            display: inline-flex;
+            align-items: center;
+        }
+
         .red {
             font-weight: bold;
             color: rgb(196, 32, 32);
+            justify-content: flex-end;
         }
 
         &:hover {

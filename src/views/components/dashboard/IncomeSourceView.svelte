@@ -4,6 +4,10 @@
     import CircleButton from "../../shared/CircleButton.svelte";
     import { incomeSourceStore } from "../../../store/income-source.store";
     import { expenseSourceStore } from "../../../store/expense-source.store";
+    import ProgressIndicator from "../../shared/ProgressIndicator.svelte";
+    import { incomeItemStore } from "../../../store/income-item.store";
+    import moment from "moment";
+    import { itemFiltersStore } from "../../../store/item-filters.store";
 
     export let index: number;
     export let budgetId: number;
@@ -11,6 +15,8 @@
 
     const { selectedIncomeSourceId } = incomeSourceStore;
     const { selectedExpenseSourceId } = expenseSourceStore;
+    const { dateFilter } = itemFiltersStore;
+    const { incomeItems } = incomeItemStore;
 
     let isEditing = false;
     let isMouseInIncomeSource = false;
@@ -22,6 +28,19 @@
             : index % 2 === 1
             ? "rgb(245, 245, 245)"
             : "white";
+
+    let percentComplete: number;
+    $: percentComplete =
+        [...$incomeItems.values()]
+            .filter(incomeItem => incomeItem.incomeSourceName === incomeSource.name)
+            .filter(item => {
+                const dateTransacted = moment(item.dateTransacted);
+                return (
+                    dateTransacted.month() === $dateFilter.month() &&
+                    dateTransacted.year() === $dateFilter.year()
+                );
+            })
+            .reduce((total, item) => total + item.amount, 0.0) / incomeSource.amount;
 
     const handleClick = (e: MouseEvent) => {
         if (e.ctrlKey) {
@@ -48,6 +67,7 @@
         on:mouseleave="{() => (isMouseInIncomeSource = false)}"
     >
         <span>{incomeSource.name}</span>
+        <ProgressIndicator percentComplete="{percentComplete}" />
         <span class="green">${incomeSource.amount.toFixed(2)}</span>
         <CircleButton
             id="edit-income-source"
@@ -79,12 +99,18 @@
         padding: 10px;
         height: 20px;
         display: grid;
-        grid-template-columns: 1fr auto 20px 20px;
+        grid-template-columns: 1fr 50px 75px 20px 20px;
         grid-column-gap: 4px;
+
+        span {
+            display: inline-flex;
+            align-items: center;
+        }
 
         .green {
             font-weight: bold;
             color: rgb(32, 196, 32);
+            justify-content: flex-end;
         }
 
         &:hover {

@@ -63,7 +63,7 @@
             on:click="{() => (incomeFormShowing = true)}"
         />
     </h3>
-    <div id="income-sources-container">
+    <div class="income-sources-container">
         {#each incomeSourceValues as incomeSource, index}
             <IncomeSourceView index="{index}" budgetId="{budgetId}" incomeSource="{incomeSource}" />
         {/each}
@@ -152,6 +152,10 @@
             grid-template-columns: 1fr auto auto auto;
             column-gap: 5px;
             border-top: 1px solid lightgray;
+        }
+
+        .income-sources-container {
+            overflow-y: scroll;
         }
 
         .income-total,

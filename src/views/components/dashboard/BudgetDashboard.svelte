@@ -4,11 +4,14 @@
     import SourcesList from "./SourcesList.svelte";
     import ItemsList from "./ItemsList.svelte";
     import DashboardControls from "./DashboardControls.svelte";
+    import Charts from "./Charts.svelte";
 
     const { selectedBudget } = budgetStore;
 
     let title: string;
     $: title = $selectedBudget?.title ?? "Budget Creator";
+
+    let view: "list" | "chart" = "list";
 </script>
 
 <svelte:head>
@@ -22,9 +25,13 @@
             incomeSources="{$selectedBudget.incomeSources}"
             expenseSources="{$selectedBudget.expenseSources}"
         />
-        <DashboardControls />
+        <DashboardControls bind:view />
         <Categories />
-        <ItemsList />
+        {#if view === "list"}
+            <ItemsList />
+        {:else}
+            <Charts />
+        {/if}
     {/if}
 </main>
 
@@ -41,6 +48,6 @@
         grid-template-areas:
             "income-sources controls"
             "income-sources categories"
-            "income-sources items";
+            "income-sources main";
     }
 </style>

@@ -70,7 +70,7 @@
 
 <style lang="scss">
     .expense-sources-container {
-        overflow-y: auto;
+        overflow-y: scroll;
     }
 
     .expense-category-label,
