@@ -1,6 +1,6 @@
 <script lang="ts">
     import Icon from "../Icon.svelte";
-    import { portal } from "svelte-portal/src/Portal.svelte";
+    import {portal} from "../../../util/portal"
 
     export let id: string;
     export let text: string;

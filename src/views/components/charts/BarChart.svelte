@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { afterUpdate, onDestroy, onMount } from "svelte";
+    import { afterUpdate, onMount } from "svelte";
     import {
         Chart,
         ChartData,
@@ -26,10 +26,9 @@
     export let maxSlices = 3;
 
     let chartRef: HTMLDivElement;
-    let chart: Chart | null = null;
 
     onMount(() => {
-        chart = new Chart(chartRef, {
+        new Chart(chartRef, {
             data,
             title,
             type,
@@ -47,7 +46,7 @@
     });
 
     afterUpdate(() => {
-        chart = new Chart(chartRef, {
+        new Chart(chartRef, {
             data,
             title,
             type,
@@ -62,10 +61,6 @@
             isNavigable,
             maxSlices,
         });
-    });
-
-    onDestroy(() => {
-        chart = null;
     });
 </script>
 

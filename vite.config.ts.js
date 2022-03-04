@@ -1,0 +1,14 @@
+// vite.config.ts
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { sveltePreprocess } from "svelte-preprocess/dist/autoProcess.js";
+var production = import.meta.env.PROD;
+var vite_config_default = defineConfig({
+  plugins: [svelte({
+    preprocess: sveltePreprocess({ sourceMap: !production })
+  })]
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImltcG9ydCB7IGRlZmluZUNvbmZpZywgUGx1Z2luT3B0aW9uIH0gZnJvbSAndml0ZSdcclxuaW1wb3J0IHsgc3ZlbHRlIH0gZnJvbSAnQHN2ZWx0ZWpzL3ZpdGUtcGx1Z2luLXN2ZWx0ZSdcclxuaW1wb3J0IHsgc3ZlbHRlUHJlcHJvY2VzcyB9IGZyb20gXCJzdmVsdGUtcHJlcHJvY2Vzcy9kaXN0L2F1dG9Qcm9jZXNzLmpzXCI7XHJcblxyXG5jb25zdCBwcm9kdWN0aW9uID0gaW1wb3J0Lm1ldGEuZW52LlBST0Q7XHJcblxyXG5jb25zdCB0eXBlQ2hlY2sgPSAoKSA9PiB7XHJcbiAgcmV0dXJuIHtcclxuICAgIHdyaXRlXHJcbiAgfVxyXG59XHJcblxyXG4vLyBodHRwczovL3ZpdGVqcy5kZXYvY29uZmlnL1xyXG5leHBvcnQgZGVmYXVsdCBkZWZpbmVDb25maWcoe1xyXG4gIHBsdWdpbnM6IFtzdmVsdGUoe1xyXG4gICAgcHJlcHJvY2Vzczogc3ZlbHRlUHJlcHJvY2Vzcyh7c291cmNlTWFwOiAhcHJvZHVjdGlvbn0pXHJcbiAgfSldXHJcbn0pXHJcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBQTtBQUNBO0FBQ0E7QUFFQSxJQUFNLGFBQWEsWUFBWSxJQUFJO0FBU25DLElBQU8sc0JBQVEsYUFBYTtBQUFBLEVBQzFCLFNBQVMsQ0FBQyxPQUFPO0FBQUEsSUFDZixZQUFZLGlCQUFpQixFQUFDLFdBQVcsQ0FBQztBQUFBO0FBQUE7IiwKICAibmFtZXMiOiBbXQp9Cg==

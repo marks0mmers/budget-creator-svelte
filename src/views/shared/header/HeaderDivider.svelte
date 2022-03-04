@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { portal } from "svelte-portal/src/Portal.svelte";
+    import {portal} from "../../../util/portal"
 </script>
 
 <hr class="header-divider" use:portal="{'#header-buttons'}" />

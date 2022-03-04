@@ -24,7 +24,7 @@
 <div class="categories-container">
     <div class="categories-row">
         <h3 class="categories-title">Categories:</h3>
-        {#each $expenseCategoryValues as expenseCategory}
+        {#each $expenseCategoryValues as expenseCategory (expenseCategory.id)}
             <CategoryView category="{expenseCategory}" />
         {/each}
         <CategoryView />

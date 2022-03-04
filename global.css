@@ -24,3 +24,7 @@ input::placeholder {
 .ag-center-cols-viewport {
     overflow-x: hidden !important;
 }
+
+#app {
+    height: 100vh;
+}

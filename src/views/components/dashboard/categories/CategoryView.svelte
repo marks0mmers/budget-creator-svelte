@@ -30,24 +30,28 @@
         isEditing = false;
         if (name !== "") {
             if (category) {
-                switch (mode) {
-                    case "category":
-                        await expenseCategoryStore.updateExpenseCategory(category.id, { name });
-                        break;
-                    case "sub-category":
-                        if ($selectedCategoryId) {
-                            await expenseSubCategoryStore.updateExpenseSubCategory(
-                                $selectedCategoryId,
-                                category.id,
-                                { name },
-                            );
-                        }
-                        break;
+                if (category.name !== name) {
+                    switch (mode) {
+                        case "category":
+                            await expenseCategoryStore.updateExpenseCategory(category.id, { name });
+                            break;
+                        case "sub-category":
+                            if ($selectedCategoryId) {
+                                await expenseSubCategoryStore.updateExpenseSubCategory(
+                                    $selectedCategoryId,
+                                    category.id,
+                                    { name },
+                                );
+                            }
+                            break;
+
+                    }
                 }
             } else {
                 switch (mode) {
                     case "category":
                         await expenseCategoryStore.createExpenseCategory({ name });
+                        name = "";
                         break;
                     case "sub-category":
                         if ($selectedCategoryId) {
@@ -80,8 +84,8 @@
         }
     };
 
-    function handleClick(e: MouseEvent) {
-        if (e.ctrlKey && isSelected) {
+    function handleClick() {
+        if (isSelected) {
             switch (mode) {
                 case "category":
                     selectedCategoryId.set(undefined);
@@ -104,6 +108,12 @@
             isEditing = true;
         }
     }
+
+    function handleKeydown(e: KeyboardEvent) {
+        if (isEditing && e.key === "Escape") {
+            isEditing = false;
+        }
+    }
 </script>
 
 {#if isSelected}
@@ -115,6 +125,8 @@
         on:click="{deleteCategory}"
     />
 {/if}
+
+<svelte:window on:keydown={handleKeydown} />
 
 <button
     class="category-view"
